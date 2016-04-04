@@ -7,15 +7,6 @@
 
 Development project of a financial management system for obtaining curricular component of the Software Design course - University of Brasilia.
 
-## Group members
-
-|     **Name**     |   **GitHub**                                       |       **Contact**          |
-|------------------|:--------------------------------------------------:|:--------------------------:|
-|   André Guedes   | [@Kavospus](https://github.com/Kavospus)           | andrebsguedes@gmail.com    |
-| Augusto Modesto  | [@modestoo](https://github.com/modestoo)           | augusto.modestoo@gmail.com |
-| Jonathan Moraes  | [@arkye](https://github.com/arkye)                 | arkye@hotmail.com.br       |
-| Matheus Ferraz   | [@MatheusFerraz](https://github.com/MatheusFerraz) | matheus.herlan@gmail.com   |
-
 ## Installation and Project Execution
 
 ### Django Installation Steps
@@ -49,15 +40,6 @@ Development project of a financial management system for obtaining curricular co
 =================================================
 
 Projeto de desenvolvimento de um sistema de gerenciamento financeiro para obtenção do componente curricular da disciplina de Desenho de Software - Universidade de Brasília.
-
-## Membros do grupo
-
-|     **Nome**     |   **GitHub**                                       |       **Contato**          |
-|------------------|:--------------------------------------------------:|:--------------------------:|
-|   André Guedes   | [@Kavospus](https://github.com/Kavospus)           | andrebsguedes@gmail.com    |
-| Augusto Modesto  | [@modestoo](https://github.com/modestoo)           | augusto.modestoo@gmail.com |
-| Jonathan Moraes  | [@arkye](https://github.com/arkye)                 | arkye@hotmail.com.br       |
-| Matheus Ferraz   | [@MatheusFerraz](https://github.com/MatheusFerraz) | matheus.herlan@gmail.com   |
 
 ## Instalação e Execução do Projeto
 

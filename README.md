@@ -1,28 +1,21 @@
 ![EqLibra's Logo](http://i.imgur.com/Trtp7on.png)
 
-> Heeey, brasileiro? Tem informações em português logo abaixo! Se quiser pegar um atalho, você pode [clicar aqui](http://github.com/KanJam/Finpy#eqlibra---sistema-de-gerenciamento-financeiro)
+> Heeey, brasileiro? Tem informações em português logo abaixo! Se quiser pegar um atalho, você pode [clicar aqui](http://github.com/DAS1-2016/Finpy#eqlibra---sistema-de-gerenciamento-financeiro)
 
 # EqLibra - Financial Management System
 =========================================
 
 Development project of a financial management system for obtaining curricular component of the Software Design course - University of Brasilia.
 
-## Group members
-
-|     **Name**     |   **GitHub**                                       |       **Contact**          |
-|------------------|:--------------------------------------------------:|:--------------------------:|
-|   André Guedes   | [@Kavospus](https://github.com/Kavospus)           | andrebsguedes@gmail.com    |
-| Augusto Modesto  | [@modestoo](https://github.com/modestoo)           | augusto.modestoo@gmail.com |
-| Jonathan Moraes  | [@arkye](https://github.com/arkye)                 | arkye@hotmail.com.br       |
-| Matheus Ferraz   | [@MatheusFerraz](https://github.com/MatheusFerraz) | matheus.herlan@gmail.com   |
-
 ## Installation and Project Execution
+
+* Python version: 3.4.1
 
 ### Django Installation Steps
 
-> 1 - Installing the pip - [sudo apt-get install python-pip]
+> 1 - Installing the pip - [sudo apt-get install python3-pip]
 
-> 2 - Django specific version Installation - [sudo pip install Django == 1.7.7]
+> 2 - Django specific version Installation - [sudo pip3 install Django == 1.7.7]
 
 ### Installation Steps and Database Configuration (PostgreSQL)
 
@@ -38,11 +31,11 @@ Development project of a financial management system for obtaining curricular co
 
 ### Installation of the other modules
 
-> 1 - Installing psycopg2 - [sudo apt-get install python-psycopg2]
+> 1 - Installing psycopg2 - [sudo apt-get install python3-psycopg2]
 
-> 2 - Installation of bootstrap3 - [sudo pip install django-bootstrap3]
+> 2 - Installation of bootstrap3 - [sudo pip3 install django-bootstrap3==6.2.2]
 
-> 3 - Installation of Foundation - [sudo pip install django-foundation]
+> 3 - Installation of Foundation - [sudo pip3 install django-foundation]
 
 
 # EqLibra - Sistema de Gerenciamento Financeiro
@@ -50,22 +43,15 @@ Development project of a financial management system for obtaining curricular co
 
 Projeto de desenvolvimento de um sistema de gerenciamento financeiro para obtenção do componente curricular da disciplina de Desenho de Software - Universidade de Brasília.
 
-## Membros do grupo
-
-|     **Nome**     |   **GitHub**                                       |       **Contato**          |
-|------------------|:--------------------------------------------------:|:--------------------------:|
-|   André Guedes   | [@Kavospus](https://github.com/Kavospus)           | andrebsguedes@gmail.com    |
-| Augusto Modesto  | [@modestoo](https://github.com/modestoo)           | augusto.modestoo@gmail.com |
-| Jonathan Moraes  | [@arkye](https://github.com/arkye)                 | arkye@hotmail.com.br       |
-| Matheus Ferraz   | [@MatheusFerraz](https://github.com/MatheusFerraz) | matheus.herlan@gmail.com   |
-
 ## Instalação e Execução do Projeto
+
+* Versão do Python: 3.4.1
 
 ### Passos da Instalação do Django
 
-> 1 - Instalação do pip -  [sudo apt-get install python-pip]
+> 1 - Instalação do pip -  [sudo apt-get install python3-pip]
 
-> 2 - Instalação da versão específica do Django - [sudo pip install Django==1.7.7]
+> 2 - Instalação da versão específica do Django - [sudo pip3 install Django==1.7.7]
 
 ### Passos da Instalação e Configuração do Banco de Dados (PostgreSQL)
 
@@ -81,8 +67,8 @@ Projeto de desenvolvimento de um sistema de gerenciamento financeiro para obten�
 
 ### Instalação dos demais módulos
 
-> 1 - Instalação do psycopg2 - [sudo apt-get install python-psycopg2]
+> 1 - Instalação do psycopg2 - [sudo apt-get install python3-psycopg2]
 
-> 2 - Instalação do bootstrap3 - [sudo pip install django-bootstrap3]
+> 2 - Instalação do bootstrap3 - [sudo pip3 install django-bootstrap3==6.2.2]
 
-> 3 - Instalação do Foundation - [sudo pip install django-foundation]
+> 3 - Instalação do Foundation - [sudo pip3 install django-foundation]

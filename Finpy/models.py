@@ -153,19 +153,19 @@ class InvestmentSimulation(models.Model):
     """
 
     # Valor presente do investimento
-    present_value = models.DecimalField(_('Valor Presente'), decimal_places=2, max_digits=12, blank=True, null=True)
+    present_value = models.DecimalField(_('Present Value'), decimal_places=2, max_digits=12, blank=True, null=True)
 
     # Valor futuro do investimento
-    future_value = models.DecimalField(_('Valor Futuro'), decimal_places=2, max_digits=12, blank=True, null=True)
+    future_value = models.DecimalField(_('Future Value'), decimal_places=2, max_digits=12, blank=True, null=True)
 
     # Valor do pagamento utilizado na simulacao
-    payment_value = models.DecimalField(_('Valor do Pagamento'), decimal_places=2, max_digits=12, blank=True, null=True)
+    payment_value = models.DecimalField(_('Payment Value'), decimal_places=2, max_digits=12, blank=True, null=True)
  
     # Valor da taxa
-    rate_value = models.DecimalField(_('Valor da Taxa'), decimal_places=2, max_digits=3, blank=True, null=True)   
+    rate_value = models.DecimalField(_('Rate Value'), decimal_places=2, max_digits=3, blank=True, null=True)   
     
     # Tempo de duracao do investimento
-    period_value = models.PositiveIntegerField(_('Valor do Período'), default=1, blank=True, null=True)
+    period_value = models.PositiveIntegerField(_('Period Value'), default=1, blank=True, null=True)
 
     # Itens do Enum Resultado A Descobrir
     PRESENT_VALUE = _('Present Value')
@@ -176,11 +176,11 @@ class InvestmentSimulation(models.Model):
 
     # Enum do Tipo Resultado A Descobrir
     RESULT_TO_DISCOVER = (
-    (PRESENT_VALUE, _('Valor Presente')),
-    (FUTURE_VALUE, _('Valor Futuro')),
-    (PAYMENT_VALUE, _('Valor do Pagamento')),
-    (RATE_VALUE, _('Valor da Taxa')),
-    (PERIOD_VALUE, _('Valor do Período')),
+    (PRESENT_VALUE, _('Present Value')),
+    (FUTURE_VALUE, _('Future Value')),
+    (PAYMENT_VALUE, _('Payment Value')),
+    (RATE_VALUE, _('Rate Value')),
+    (PERIOD_VALUE, _('Period Value')),
     )
 
     # Itens do Enum Tipo de Simulacao
@@ -189,15 +189,15 @@ class InvestmentSimulation(models.Model):
 
     # Enum de Tipo de Simulacao
     SIMULATION_TYPE = (
-    (FINANCIAL_MATH, _('Matemática Financeira')),
-    (INVESTMENT_RETURN, _('Retorno de Investimento')),
+    (FINANCIAL_MATH, _('Financial Math')),
+    (INVESTMENT_RETURN, _('Investment Return')),
     )
 
     # Definicao do tipo de investimento
-    simulation_type = models.CharField(_('Tipo de Simulação'), choices=SIMULATION_TYPE, default=FINANCIAL_MATH, max_length=30)
+    simulation_type = models.CharField(_('Simulation Type'), choices=SIMULATION_TYPE, default=FINANCIAL_MATH, max_length=30)
 
     # Definicao do resultado a descobrir
-    result_to_discover = models.CharField(_('Resultado a Descobrir'), choices=RESULT_TO_DISCOVER, default=FUTURE_VALUE, max_length=30)
+    result_to_discover = models.CharField(_('Result To Discover'), choices=RESULT_TO_DISCOVER, default=FUTURE_VALUE, max_length=30)
 
     simulation_user = models.ForeignKey(User, verbose_name=_('User'))
 

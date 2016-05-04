@@ -3,16 +3,7 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 from django.core import validators
 from django.contrib.auth.models import User
 
-class UserProfile(models.Model):
-
-    """Classe UserProfile. Classe que possui
-    as informações inerentes ao Perfil do Usuário.
-    Realiza extensão da Model fornecida pelo próprio
-    framework Django com informações básicas de usuário.
-    """
-
-    # Usuario Associado
-    user = models.OneToOneField(User)
+class States:
 
     # Valores possiveis para Estado
     AC = 'AC'
@@ -73,7 +64,18 @@ class UserProfile(models.Model):
     (SE, 'SE'),
     (TO, 'TO')
     )
-    
+
+class UserProfile(models.Model):
+
+    """Classe UserProfile. Classe que possui
+    as informações inerentes ao Perfil do Usuário.
+    Realiza extensão da Model fornecida pelo próprio
+    framework Django com informações básicas de usuário.
+    """
+
+    # Usuario Associado
+    user = models.OneToOneField(User)
+ 
     # CPF
     cpf = models.CharField(_('cpf'),max_length=14,
         help_text=_('Use format ???.???.???-??'),
@@ -88,7 +90,7 @@ class UserProfile(models.Model):
     organization = models.CharField(_('Organization'), max_length=150, blank=True)
     
     # Estado do Orgao Expedidor do RG
-    expeditor_uf = models.CharField(_('Expeditor'),max_length=2, choices=STATES, default=DF, blank=True)
+    expeditor_uf = models.CharField(_('Expeditor'),max_length=2, choices=States.STATES, default=States.DF, blank=True)
     
     # RG
     rg = models.CharField(_('rg'),max_length=9,
@@ -105,6 +107,8 @@ class UserProfile(models.Model):
         """
 
         return self.user.username
+
+
 
 class Finance(models.Model):
 

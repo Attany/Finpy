@@ -11,11 +11,11 @@ urlpatterns = patterns('',
 
                         # About page
                         # Pattern: finpy/about.html
-                        url(r'^about.html', views.about_page),
+                        url(r'^about.html', views.about_page, name='about'),
 
                         # Services resume page
                         # Pattern: finpy/service.html
-                        url(r'^service.html', views.service_page),
+                        url(r'^service.html', views.service_page, name='services_description'),
 
                         # Register page
                         # Pattern: finpy/signup

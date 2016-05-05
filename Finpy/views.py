@@ -5,7 +5,9 @@ from django.utils.translation import ugettext as _
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
+from django.views.generic import View
 from Finpy.models import UserProfile, Entry, InvestmentSimulation
 from Finpy.forms import UserCreationForm, ProfileUpdateForm, EntryForm, InvestmentSimulationForm
 
@@ -24,6 +26,39 @@ def index(request, template_name='Finpy/homepage.html'):
         'title': _('Home'),
     }
     return TemplateResponse(request, template_name, context)
+
+
+class UpdateProfileView(View):
+
+    http_method_names = [u'get', u'post']
+
+    template_name='profile/update.html'
+    update_form=ProfileUpdateForm
+    current_app=None
+    extra_context=None
+
+    @method_decorator(login_required)
+    def get(self, request, profile_id=None):
+
+        if profile_id is not None:
+            profile = UserProfile.objects.get(pk=int(profile_id))
+            user = profile.user
+            if user == request.user:
+                form = self.update_form(instance=profile)
+
+                context = {
+                    'form': form,
+                    'title': _('User Profile Update'),
+                }
+
+                if self.extra_context is not None:
+                    context.update(self.extra_context)
+                
+                return TemplateResponse(request, self.template_name, context,
+                    current_app=self.current_app)
+            else:
+                return HttpResponse(_("This isn't your profile"))
+
 
 @login_required
 def update_profile(request, profile_id=None, template_name='profile/update.html',

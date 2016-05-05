@@ -48,7 +48,8 @@ urlpatterns = patterns('',
 
                         # User personal data update
                         # Pattern: finpy/profile/update/id , where id is the number of user id
-                        url(r'^profile/update/(?P<profile_id>\d+)$', views.update_profile, name='update_profile'),
+                        #url(r'^profile/update/(?P<profile_id>\d+)$', views.update_profile, name='update_profile'),
+                        url(r'^profile/update/(?P<profile_id>\d+)$', views.UpdateProfileView.as_view(), name='update_profile'),
 
                         # Login page
                         # Pattern: finpy/login

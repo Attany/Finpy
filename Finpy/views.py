@@ -12,13 +12,29 @@ from Finpy.forms import UserCreationForm, ProfileUpdateForm, EntryForm, Investme
 # Create your views here.
 
 def about_page(request, template_name='Finpy/about.html'):
+    
+    """Method that receives a request and returns the TemplateResponse method
+    that is processed to display the page Finpy/about.html
+    """
+    
     return TemplateResponse(request, template_name)
 
 def service_page(request, template_name='Finpy/service.html'):
+    
+    """Method that receives a request and returns the TemplateResponse method
+    that is processed to display the page Finpy/service.html
+    """
+
     return TemplateResponse(request, template_name)
 
 @login_required
 def index(request, template_name='Finpy/homepage.html'):
+
+    """Method that receives a request and returns the TemplateResponse method
+    that is processed to display the Finpy/homepage.html page, identifying the 
+    user id logged in.
+    """
+
     context = {
         'profile_id': request.user.userprofile.id,
         'title': _('Home'),
@@ -28,6 +44,10 @@ def index(request, template_name='Finpy/homepage.html'):
 @login_required
 def update_profile(request, profile_id=None, template_name='profile/update.html',
     update_form=ProfileUpdateForm, current_app=None, extra_context=None):
+
+    """This method to display the page profile/update.html, which contais the
+    form to perform the update of user data.
+    """
 
     if profile_id is not None:
         profile = UserProfile.objects.get(pk=int(profile_id))
@@ -54,6 +74,11 @@ def update_profile(request, profile_id=None, template_name='profile/update.html'
 @login_required
 def simulate_investment(request, template_name='investment/simulate.html',
     investment_simulation_form=InvestmentSimulationForm, current_app=None, extra_context=None):
+    
+    """This method is responsible to display page investment/simulate.html 
+    which contains the form to perform the simulation of investments.
+    """
+
     if request.method == "POST":
         investment_simulation = InvestmentSimulation()
         investment_simulation.simulation_user = request.user
@@ -75,6 +100,11 @@ def simulate_investment(request, template_name='investment/simulate.html',
 @login_required
 def list_simulations(request, template_name='investment/list.html',
     current_app=None, extra_context=None):
+
+    """This method is responsible for displaying the page investment/list.html
+    which returns a list of simularions of logged user.
+    """
+
     simulations = request.user.investmentsimulation_set.all()
     context = {
         'simulations': simulations,
@@ -88,6 +118,11 @@ def list_simulations(request, template_name='investment/list.html',
 @login_required
 def list_entry(request, template_name='entry/list.html',
     current_app=None, extra_context=None):
+
+    """This method is responsible for displaying the page entry/list.html
+    which returns a list of entry of logged user.
+    """
+
     entries = request.user.entry_set.all()
     context = {
         'entries': entries,
@@ -101,6 +136,11 @@ def list_entry(request, template_name='entry/list.html',
 @login_required
 def create_entry(request, template_name='entry/create.html',
     entry_form=EntryForm, current_app=None, extra_context=None):
+
+    """This method is responsible for displaying the page entry/create.html
+    which contains the form to create new entry.
+    """
+
     if request.method == "POST":
         entry = Entry()
         entry.entry_user = request.user
@@ -122,6 +162,11 @@ def create_entry(request, template_name='entry/create.html',
 @login_required
 def update_entry(request, entry_id=None, template_name='entry/update.html',
     success_view=list_entry, entry_form=EntryForm, current_app=None, extra_context=None):
+    
+    """This method is responsible for displaying the page entry/update.html
+    which contains the form to update entry.
+    """
+
     if entry_id is not None:
         entry = Entry.objects.get(pk=int(entry_id))
         if entry.entry_user == request.user:
@@ -147,6 +192,11 @@ def update_entry(request, entry_id=None, template_name='entry/update.html',
 @login_required
 def delete_entry(request, entry_id=None, template_name='entry/delete.html',
     success_view=list_entry, entry_form=EntryForm, current_app=None, extra_context=None):
+    
+    """This method is responsible for displaying the page entry/delete.html
+    which contains the form to delete entry.
+    """
+
     if entry_id is not None:
         entry = Entry.objects.get(pk=int(entry_id))
         if entry.entry_user == request.user:
@@ -160,6 +210,11 @@ def delete_entry(request, entry_id=None, template_name='entry/delete.html',
 def signup(request, template_name='registration/signup.html',
     post_signup_redirect=None, signup_form=UserCreationForm,
     current_app=None, extra_context=None):
+    
+    """This method is responsible for displaying the page entry/delete.html
+    which contains the form to create new user.
+    """
+
     if post_signup_redirect is None:
         post_signup_redirect = reverse('login')
     else:

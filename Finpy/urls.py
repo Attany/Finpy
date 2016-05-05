@@ -58,14 +58,6 @@ urlpatterns = patterns('',
                         # Pattern: finpy/logout
                         url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
 
-                        # Password change page
-                        # Pattern: finpy/password_change
-                        url(r'^password_change/$', auth_views.password_change, {'template_name': 'accounts/password_change_form.html'}, name='password_chage'),
-
-                        # Confirmation of password changed page
-                        # Pattern: finpy/password_change/done
-                        url(r'^password_change/done/$', auth_views.password_change_done, {'template_name': 'accounts/password_change_done.html'}, name='password_change_done'),
-
                         # Change password by sending an email
                         # Pattern: finpy/password_reset
                         url(r'^password_reset/$', auth_views.password_reset, {'template_name': 'accounts/password_reset_form.html'}, name='password_reset'),

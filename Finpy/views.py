@@ -13,6 +13,80 @@ from Finpy.forms import UserCreationForm, ProfileUpdateForm, EntryForm, Investme
 
 # Create your views here.
 
+class UpdateProfileView(View):
+
+    # Allowed methods on the view
+    http_method_names = [u'get', u'post']
+
+    template_name='profile/update.html'
+    update_form=ProfileUpdateForm
+    current_app=None
+    extra_context=None
+
+    @method_decorator(login_required)
+    def get(self, request, profile_id=None):
+        """ Get the previous data of the current user to update profile """
+
+        user_auth = self.check_user(request, profile_id)
+        if user_auth['authenticated']:
+            form = self.update_form(instance=user_auth['profile'])
+
+            context = self.check_extra_content(form)
+            
+            response = TemplateResponse(request, self.template_name, context, 
+                current_app=self.current_app)
+        else:
+            response = HttpResponse(_("This isn't your profile"))
+
+        return response
+
+    @method_decorator(login_required)
+    def post(self, request, profile_id=None):
+        """ Update the user profile with given information """
+
+        user_auth = self.check_user(request, profile_id)
+        if user_auth['authenticated']:
+            form = self.update_form(data=request.POST, instance=user_auth['profile'])
+            if form.is_valid():
+                form.save()
+
+            context = self.check_extra_content(form)
+            
+            response = TemplateResponse(request, self.template_name, context, 
+                current_app=self.current_app)
+        else:
+            response = HttpResponse(_("This isn't your profile"))
+
+        return response
+
+    def check_user(self, request, user_id):
+        """ Check if the current user is the update profile request user"""
+
+        current_user_auth = {'authenticated': False, 'profile': None}
+        if user_id is not None:
+            profile = UserProfile.objects.get(pk=int(user_id))
+            user = profile.user
+            if user == request.user:
+                current_user_auth = {'authenticated': True, 'profile': profile}
+            else:
+                current_user_auth = {'authenticated': False, 'profile': None}
+
+        return current_user_auth
+
+    def check_extra_content(self, form):
+        """ Checks if have extra content to add in the context """
+
+        context = {
+            'form': form,
+            'title': _('User Profile Update'),
+        }
+
+        if self.extra_context is not None:
+            context.update(self.extra_context)
+        
+        return context
+
+
 def about_page(request, template_name='Finpy/about.html'):
     return TemplateResponse(request, template_name)
 
@@ -26,86 +100,6 @@ def index(request, template_name='Finpy/homepage.html'):
         'title': _('Home'),
     }
     return TemplateResponse(request, template_name, context)
-
-
-class UpdateProfileView(View):
-
-    http_method_names = [u'get', u'post']
-
-    template_name='profile/update.html'
-    update_form=ProfileUpdateForm
-    current_app=None
-    extra_context=None
-
-    @method_decorator(login_required)
-    def get(self, request, profile_id=None):
-
-        if profile_id is not None:
-            profile = UserProfile.objects.get(pk=int(profile_id))
-            user = profile.user
-            if user == request.user:
-                form = self.update_form(instance=profile)
-
-                context = {
-                    'form': form,
-                    'title': _('User Profile Update'),
-                }
-
-                if self.extra_context is not None:
-                    context.update(self.extra_context)
-                
-                return TemplateResponse(request, self.template_name, context,
-                    current_app=self.current_app)
-            else:
-                return HttpResponse(_("This isn't your profile"))
-
-    @method_decorator(login_required)
-    def post(self, request, profile_id=None):
-
-        if profile_id is not None:
-            profile = UserProfile.objects.get(pk=int(profile_id))
-            user = profile.user
-            if user == request.user:
-                form = self.update_form(data=request.POST, instance=profile)
-                if form.is_valid():
-                    form.save()
-
-                context = {
-                    'form': form,
-                    'title': _('User Profile Update'),
-                }
-
-                if self.extra_context is not None:
-                    context.update(self.extra_context)
-
-                return TemplateResponse(request, self.template_name, context,
-                    current_app=self.current_app)
-
-@login_required
-def update_profile(request, profile_id=None, template_name='profile/update.html',
-    update_form=ProfileUpdateForm, current_app=None, extra_context=None):
-
-    if profile_id is not None:
-        profile = UserProfile.objects.get(pk=int(profile_id))
-        user = profile.user
-        if user == request.user:
-            if request.method == "POST":
-                form = update_form(data=request.POST, instance=profile)
-                if form.is_valid():
-                    form.save()
-            else:
-                form = update_form(instance=profile)
-
-            context = {
-                'form': form,
-                'title': _('User Profile Update'),
-            }
-            if extra_context is not None:
-                context.update(extra_context)
-            return TemplateResponse(request, template_name, context,
-                current_app=current_app)
-        else:
-            return HttpResponse(_("This isn't your profile"))
 
 @login_required
 def simulate_investment(request, template_name='investment/simulate.html',

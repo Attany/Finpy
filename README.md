@@ -37,6 +37,8 @@ Development project of a financial management system for obtaining curricular co
 
 > 3 - Installation of Foundation - [sudo pip3 install django-foundation]
 
+> 4 - Installation of Zurb Foundation - [sudo pip3 install django-zurb-foundation]
+
 
 # EqLibra - Sistema de Gerenciamento Financeiro
 =================================================
@@ -72,3 +74,5 @@ Projeto de desenvolvimento de um sistema de gerenciamento financeiro para obten�
 > 2 - Instalação do bootstrap3 - [sudo pip3 install django-bootstrap3==6.2.2]
 
 > 3 - Instalação do Foundation - [sudo pip3 install django-foundation]
+
+> 4 - Instalação do Zurb Foundation - [sudo pip3 install django-zurb-foundation]

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-11 06:03-0300\n"
+"POT-Creation-Date: 2016-04-23 13:03-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,314 +17,349 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: Finpy/forms.py:12
+#: forms.py:14
 msgid "The two password fields didn't match."
 msgstr ""
 
-#: Finpy/forms.py:14
+#: forms.py:16
 msgid "Password"
 msgstr ""
 
-#: Finpy/forms.py:16
+#: forms.py:18
 msgid "Password confirmation"
 msgstr ""
 
-#: Finpy/forms.py:18
+#: forms.py:20
 msgid "Enter the same password as above, for verification."
 msgstr ""
 
-#: Finpy/models.py:75
+#: models.py:78
 msgid "cpf"
 msgstr ""
 
-#: Finpy/models.py:76
+#: models.py:79
 msgid "Use format ???.???.???-??"
 msgstr ""
 
-#: Finpy/models.py:78 Finpy/models.py:94
+#: models.py:81 models.py:97
 msgid "Wrong Format!"
 msgstr ""
 
-#: Finpy/models.py:82
+#: models.py:85
 msgid "Job Title"
 msgstr ""
 
-#: Finpy/models.py:85
+#: models.py:88
 msgid "Organization"
 msgstr ""
 
-#: Finpy/models.py:88
+#: models.py:91
 msgid "Expeditor"
 msgstr ""
 
-#: Finpy/models.py:91
+#: models.py:94
 msgid "rg"
 msgstr ""
 
-#: Finpy/models.py:92
+#: models.py:95
 msgid "Use format ?.???.???"
 msgstr ""
 
-#: Finpy/models.py:110
+#: models.py:121
 msgid "Total Entry Value"
 msgstr ""
 
-#: Finpy/models.py:112
+#: models.py:123
 msgid "Current Entry Value"
 msgstr ""
 
-#: Finpy/models.py:115 Finpy/models.py:122
+#: models.py:126 models.py:133
 msgid "Undefined"
 msgstr ""
 
-#: Finpy/models.py:116 Finpy/models.py:123
+#: models.py:127 models.py:134
 msgid "Daily"
 msgstr ""
 
-#: Finpy/models.py:117 Finpy/models.py:124
+#: models.py:128 models.py:135
 msgid "Weekly"
 msgstr ""
 
-#: Finpy/models.py:118 Finpy/models.py:125
+#: models.py:129 models.py:136
 msgid "Monthly"
 msgstr ""
 
-#: Finpy/models.py:137
-msgid "InvestimentSimulation's Finance"
+#: models.py:156 models.py:171 models.py:179
+msgid "Present Value"
 msgstr ""
 
-#: Finpy/models.py:140
-msgid "Amount Invested"
+#: models.py:159 models.py:172 models.py:180
+msgid "Future Value"
 msgstr ""
 
-#: Finpy/models.py:143
-msgid "Taxes"
+#: models.py:162 models.py:173 models.py:181
+msgid "Payment Value"
 msgstr ""
 
-#: Finpy/models.py:146
-msgid "Quota"
+#: models.py:165 models.py:174 models.py:182
+msgid "Rate Value"
 msgstr ""
 
-#: Finpy/models.py:149
-msgid "Taxes Periodicity Type"
+#: models.py:168 models.py:175 models.py:183
+msgid "Period Value"
 msgstr ""
 
-#: Finpy/models.py:152
-msgid "Quota Periodicity Type"
+#: models.py:187 models.py:192
+msgid "Financial Math"
 msgstr ""
 
-#: Finpy/models.py:166
-msgid "Name Category"
+#: models.py:188 models.py:193
+msgid "Investment Return"
 msgstr ""
 
-#: Finpy/models.py:170
-msgid "Description Category"
+#: models.py:197
+msgid "Simulation Type"
 msgstr ""
 
-#: Finpy/models.py:173 Finpy/models.py:178
-msgid "Income"
+#: models.py:200
+msgid "Result To Discover"
 msgstr ""
 
-#: Finpy/models.py:174 Finpy/models.py:179
-msgid "Expense"
-msgstr ""
-
-#: Finpy/models.py:191
-msgid "Entry Source"
-msgstr ""
-
-#: Finpy/models.py:194
-msgid "Entry Value"
-msgstr ""
-
-#: Finpy/models.py:197
-msgid "Due Date"
-msgstr ""
-
-#: Finpy/models.py:200
-msgid "Registration Date"
-msgstr ""
-
-#: Finpy/models.py:203
-msgid "Entry Description"
-msgstr ""
-
-#: Finpy/models.py:206
-msgid "Entry Quota Amount"
-msgstr ""
-
-#: Finpy/models.py:209
-msgid "Entry Periodicity Type"
-msgstr ""
-
-#: Finpy/models.py:212
-msgid "Entry Type"
-msgstr ""
-
-#: Finpy/models.py:215
-msgid "Entry Category"
-msgstr ""
-
-#: Finpy/models.py:218
+#: models.py:202 models.py:425
 msgid "User"
 msgstr ""
 
-#: Finpy/models.py:221 Finpy/models.py:227 Finpy/models.py:234
+#: models.py:367
+msgid "Name Category"
+msgstr ""
+
+#: models.py:371
+msgid "Description Category"
+msgstr ""
+
+#: models.py:374 models.py:379
+msgid "Income"
+msgstr ""
+
+#: models.py:375 models.py:380
+msgid "Expense"
+msgstr ""
+
+#: models.py:398
+msgid "Entry Source"
+msgstr ""
+
+#: models.py:401
+msgid "Entry Value"
+msgstr ""
+
+#: models.py:404
+msgid "Due Date"
+msgstr ""
+
+#: models.py:407
+msgid "Registration Date"
+msgstr ""
+
+#: models.py:410
+msgid "Entry Description"
+msgstr ""
+
+#: models.py:413
+msgid "Entry Quota Amount"
+msgstr ""
+
+#: models.py:416
+msgid "Entry Periodicity Type"
+msgstr ""
+
+#: models.py:419
+msgid "Entry Type"
+msgstr ""
+
+#: models.py:422
+msgid "Entry Category"
+msgstr ""
+
+#: models.py:428 models.py:434 models.py:441
 msgid "Overdue"
 msgstr ""
 
-#: Finpy/models.py:222 Finpy/models.py:228 Finpy/models.py:235
+#: models.py:429 models.py:435 models.py:442
 msgid "No Overdue Yet"
 msgstr ""
 
-#: Finpy/models.py:223 Finpy/models.py:229
+#: models.py:430 models.py:436
 msgid "All Entry"
 msgstr ""
 
-#: Finpy/templates/Finpy/base.html:56
+#: templates/Finpy/base.html:56
 msgid "Entries"
 msgstr ""
 
-#: Finpy/templates/Finpy/base.html:58
-msgid "List"
-msgstr ""
-
-#: Finpy/templates/Finpy/base.html:59
+#: templates/Finpy/base.html:58
 msgid "New"
 msgstr ""
 
-#: Finpy/templates/Finpy/base.html:66 Finpy/templates/Finpy/old_base.html:26
+#: templates/Finpy/base.html:59 templates/Finpy/base.html.py:67
+msgid "List"
+msgstr ""
+
+#: templates/Finpy/base.html:64
+msgid "Investments"
+msgstr ""
+
+#: templates/Finpy/base.html:66 templates/investment/simulate.html:13
+msgid "Simulate"
+msgstr ""
+
+#: templates/Finpy/base.html:74 templates/Finpy/old_base.html:26
 msgid "Personal Data"
 msgstr ""
 
-#: Finpy/templates/Finpy/base.html:67
+#: templates/Finpy/base.html:75
 msgid "Logout"
 msgstr ""
 
-#: Finpy/templates/Finpy/base.html:74 Finpy/templates/Finpy/old_base.html:31
-#: Finpy/templates/accounts/signup.html:13
+#: templates/Finpy/base.html:82 templates/Finpy/old_base.html:31
+#: templates/accounts/signup.html:13
 msgid "Signup"
 msgstr ""
 
-#: Finpy/templates/Finpy/base.html:76
+#: templates/Finpy/base.html:84
 msgid "Login"
 msgstr ""
 
-#: Finpy/templates/Finpy/base.html:152
+#: templates/Finpy/base.html:141
 msgid "Are you sure?"
 msgstr ""
 
-#: Finpy/templates/Finpy/base.html:153
+#: templates/Finpy/base.html:142
 msgid "This action cannot be undone."
 msgstr ""
 
-#: Finpy/templates/Finpy/base.html:154
+#: templates/Finpy/base.html:143
 msgid "Confirm"
 msgstr ""
 
-#: Finpy/templates/Finpy/base.html:155
+#: templates/Finpy/base.html:144
 msgid "Cancel"
 msgstr ""
 
-#: Finpy/templates/Finpy/index.html:7
+#: templates/Finpy/index.html:7
 msgid "Welcome"
 msgstr ""
 
-#: Finpy/templates/Finpy/old_base.html:17
+#: templates/Finpy/old_base.html:17
 msgid "Logged in as: "
 msgstr ""
 
-#: Finpy/templates/Finpy/old_base.html:25 Finpy/views.py:18
+#: templates/Finpy/old_base.html:25 views.py:24
 msgid "Home"
 msgstr ""
 
-#: Finpy/templates/Finpy/old_base.html:27 Finpy/views.py:54
+#: templates/Finpy/old_base.html:27 views.py:94
 msgid "Entry List"
 msgstr ""
 
-#: Finpy/templates/Finpy/old_base.html:28
+#: templates/Finpy/old_base.html:28
 msgid "New Entry"
 msgstr ""
 
-#: Finpy/templates/Finpy/old_base.html:30
-#: Finpy/templates/accounts/login.html:13
-#: Finpy/templates/accounts/password_reset_complete.html:9
+#: templates/Finpy/old_base.html:30 templates/accounts/login.html:13
+#: templates/accounts/password_reset_complete.html:9
 msgid "Log in"
 msgstr ""
 
-#: Finpy/templates/accounts/password_change_done.html:7
+#: templates/accounts/password_change_done.html:7
 msgid "Your password was changed."
 msgstr ""
 
-#: Finpy/templates/accounts/password_change_form.html:11
-#: Finpy/templates/accounts/password_reset_form.html:11
+#: templates/accounts/password_change_form.html:11
+#: templates/accounts/password_reset_form.html:12
 msgid "Submit"
 msgstr ""
 
-#: Finpy/templates/accounts/password_reset_complete.html:7
+#: templates/accounts/password_reset_complete.html:7
 msgid "Your password has been set.  You may go ahead and log in now."
 msgstr ""
 
-#: Finpy/templates/accounts/password_reset_confirm.html:10
+#: templates/accounts/password_reset_confirm.html:10
 msgid ""
 "Please enter your new password twice so we can verify you typed it in "
 "correctly."
 msgstr ""
 
-#: Finpy/templates/accounts/password_reset_confirm.html:17
+#: templates/accounts/password_reset_confirm.html:17
 msgid "Change my password"
 msgstr ""
 
-#: Finpy/templates/accounts/password_reset_confirm.html:25
+#: templates/accounts/password_reset_confirm.html:25
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
 msgstr ""
 
-#: Finpy/templates/accounts/password_reset_done.html:7
+#: templates/accounts/password_reset_done.html:7
 msgid ""
 "We've emailed you instructions for setting your password. You should be "
 "receiving them shortly."
 msgstr ""
 
-#: Finpy/templates/accounts/password_reset_done.html:9
+#: templates/accounts/password_reset_done.html:9
 msgid ""
 "If you don't receive an email, please make sure you've entered the address "
 "you registered with, and check your spam folder."
 msgstr ""
 
-#: Finpy/templates/entry/create.html:13
+#: templates/entry/create.html:13
 msgid "Create"
 msgstr ""
 
-#: Finpy/templates/entry/list.html:18
+#: templates/entry/list.html:14
+msgid "Type"
+msgstr ""
+
+#: templates/entry/list.html:14
+msgid "Value"
+msgstr ""
+
+#: templates/entry/list.html:18
 msgid "Edit"
 msgstr ""
 
-#: Finpy/templates/entry/list.html:21
+#: templates/entry/list.html:21
 msgid "Delete"
 msgstr ""
 
-#: Finpy/templates/entry/update.html:13
+#: templates/entry/update.html:13
 msgid "Update"
 msgstr ""
 
-#: Finpy/templates/profile/update.html:13
+#: templates/profile/update.html:13
 msgid "Save"
 msgstr ""
 
-#: Finpy/views.py:39
+#: views.py:45
 msgid "User Profile Update"
 msgstr ""
 
-#: Finpy/views.py:46 Finpy/views.py:105 Finpy/views.py:118
+#: views.py:52 views.py:145 views.py:158
 msgid "This isn't your profile"
 msgstr ""
 
-#: Finpy/views.py:75 Finpy/views.py:98
+#: views.py:68
+msgid "Investment Simulation"
+msgstr ""
+
+#: views.py:81
+msgid "Investment Simulation List"
+msgstr ""
+
+#: views.py:115 views.py:138
 msgid "Entry Creation"
 msgstr ""
 
-#: Finpy/views.py:139
+#: views.py:179
 msgid "User Registration"
 msgstr ""

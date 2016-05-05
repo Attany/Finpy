@@ -11,11 +11,11 @@ urlpatterns = patterns('',
 
                         # About page
                         # Pattern: finpy/about.html
-                        url(r'^about.html', views.about_page),
+                        url(r'^about.html', views.about_page, name='about'),
 
                         # Services resume page
                         # Pattern: finpy/service.html
-                        url(r'^service.html', views.service_page),
+                        url(r'^service.html', views.service_page, name='services_description'),
 
                         # Register page
                         # Pattern: finpy/signup
@@ -48,7 +48,7 @@ urlpatterns = patterns('',
 
                         # User personal data update
                         # Pattern: finpy/profile/update/id , where id is the number of user id
-                        url(r'^profile/update/(?P<profile_id>\d+)$', views.update_profile, name='update_profile'),
+                        url(r'^profile/update/(?P<profile_id>\d+)$', views.UpdateProfileView.as_view(), name='update_profile'),
 
                         # Login page
                         # Pattern: finpy/login
@@ -57,14 +57,6 @@ urlpatterns = patterns('',
                         # URL to logout the current user 
                         # Pattern: finpy/logout
                         url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
-
-                        # Password change page
-                        # Pattern: finpy/password_change
-                        url(r'^password_change/$', auth_views.password_change, {'template_name': 'accounts/password_change_form.html'}, name='password_chage'),
-
-                        # Confirmation of password changed page
-                        # Pattern: finpy/password_change/done
-                        url(r'^password_change/done/$', auth_views.password_change_done, {'template_name': 'accounts/password_change_done.html'}, name='password_change_done'),
 
                         # Change password by sending an email
                         # Pattern: finpy/password_reset

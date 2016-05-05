@@ -3,18 +3,10 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 from django.core import validators
 from django.contrib.auth.models import User
 
-class UserProfile(models.Model):
 
-    """Classe UserProfile. Classe que possui
-    as informações inerentes ao Perfil do Usuário.
-    Realiza extensão da Model fornecida pelo próprio
-    framework Django com informações básicas de usuário.
-    """
-
-    # Usuario Associado
-    user = models.OneToOneField(User)
-
-    # Valores possiveis para Estado
+class States:
+    
+    # Possible values for State
     AC = 'AC'
     AL = 'AL'
     AP = 'AP'
@@ -43,7 +35,7 @@ class UserProfile(models.Model):
     SE = 'SE'
     TO = 'TO'
 
-    # Enum de Estados
+    # Enum of States
     STATES = (
     (AC, 'AC'),
     (AL, 'AL'),
@@ -73,7 +65,17 @@ class UserProfile(models.Model):
     (SE, 'SE'),
     (TO, 'TO')
     )
-    
+
+class UserProfile(models.Model):
+
+    """UserProfile class. This class contains information relation
+    to the User Profile. Permorms extension Model provider by the
+    Django framework itself with basic user information.
+    """
+
+    # User associed
+    user = models.OneToOneField(User)
+ 
     # CPF
     cpf = models.CharField(_('cpf'),max_length=14,
         help_text=_('Use format ???.???.???-??'),
@@ -81,14 +83,14 @@ class UserProfile(models.Model):
             validators.RegexValidator(r'^[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}$',_('Wrong Format!'), 'invalid'),
         ], blank=True)
     
-    # Profissao
+    # Profession
     job_title = models.CharField(_('Job Title'), max_length=150, blank=True)
     
-    # Organizacao onde Trabalha
+    # Organization whick works
     organization = models.CharField(_('Organization'), max_length=150, blank=True)
-    
+
     # Estado do Orgao Expedidor do RG
-    expeditor_uf = models.CharField(_('Expeditor'),max_length=2, choices=STATES, default=DF, blank=True)
+    expeditor_uf = models.CharField(_('Expeditor'),max_length=2, choices=States.STATES, default=States.DF, blank=True)
     
     # RG
     rg = models.CharField(_('rg'),max_length=9,
@@ -100,35 +102,36 @@ class UserProfile(models.Model):
     
     def __str__(self):
         
-        """Método de conversão para
-        o formato string.
+        """This method is responsible for converting to the format string.
         """
 
         return self.user.username
 
+
+
 class Finance(models.Model):
 
-    """Classe Finance. Classe que possui informações
-    inerentes aos lançamentos de receitas e despesas, tais
-    como periodicidade, vinculação de um lançamento à um determinado
-    usuário e valores de capital.
+    """Classe Finance. This class contains information relating to posting
+    of revenues and expenses, such as frequency, linking an entry to a particular
+    user and capital values.
     """
 
-    # Usuario Associado
+    # User associate
     finance_user = models.OneToOneField(User)
 
-    # Valor Total de Lancamentos
+    # Total value of entry
     total_entry_value = models.DecimalField(_('Total Entry Value'), decimal_places=2, max_digits=12)
-    # Caixa Atual
+    
+    # Current value
     current_value = models.DecimalField(_('Current Entry Value'), decimal_places=2, max_digits=12)
 
-    # Valores Possiveis de Periodicidade
+    # Frequency of possible values
     UNDEFINED = _('Undefined')
-    DAILY = _('Daily') # Diario
-    WEEKLY = _('Weekly') # Semanal
-    MONTHLY = _('Monthly') # Mensal
+    DAILY = _('Daily') # day
+    WEEKLY = _('Weekly') # week
+    MONTHLY = _('Monthly') # month
 
-    # Enum de Periodicidade
+    # Frequency of Enum
     PERIODICITY = (
     (UNDEFINED, _('Undefined')),
     (DAILY, _('Daily')),
@@ -138,43 +141,41 @@ class Finance(models.Model):
 
     def __str__(self):
         
-        """Método de conversão para
-        o formato string.
+        """This method is responsible for converting to the format string.
         """
 
         return self.current_value
 
 class InvestmentSimulation(models.Model):
 
-    """Classe InvestmentSimulation. Classe que possui as informações
-    inerentes às simulações de investimento, tanto no âmbito de
-    Matemática Financeira, como também, na perspectiva de Análise
-    de Retorno de Investimentos.
+    """Class InvestmentSimulation. This class has the inherent information to
+    investment simulations, both in Financial Mathematics, but also from the 
+    perspective of Investment Return Analysis.
     """
 
-    # Valor presente do investimento
+    # Present value of the investment
     present_value = models.DecimalField(_('Valor Presente'), decimal_places=2, max_digits=12, blank=True, null=True)
 
-    # Valor futuro do investimento
+    # Future value of the investment
     future_value = models.DecimalField(_('Valor Futuro'), decimal_places=2, max_digits=12, blank=True, null=True)
 
-    # Valor do pagamento utilizado na simulacao
+    # Payment value used in the simulation
     payment_value = models.DecimalField(_('Valor do Pagamento'), decimal_places=2, max_digits=12, blank=True, null=True)
  
-    # Valor da taxa
+    # Rate value
     rate_value = models.DecimalField(_('Valor da Taxa'), decimal_places=2, max_digits=3, blank=True, null=True)   
     
-    # Tempo de duracao do investimento
+    # Duration time investment
     period_value = models.PositiveIntegerField(_('Valor do Período'), default=1, blank=True, null=True)
 
-    # Itens do Enum Resultado A Descobrir
+    # Identify items Enum
     PRESENT_VALUE = _('Present Value')
     FUTURE_VALUE = _('Future Value')
     PAYMENT_VALUE = _('Payment Value')
     RATE_VALUE = _('Rate Value')
     PERIOD_VALUE = _('Period Value')
 
-    # Enum do Tipo Resultado A Descobrir
+    # Identify the type of result Enum
     RESULT_TO_DISCOVER = (
     (PRESENT_VALUE, _('Valor Presente')),
     (FUTURE_VALUE, _('Valor Futuro')),
@@ -183,59 +184,55 @@ class InvestmentSimulation(models.Model):
     (PERIOD_VALUE, _('Valor do Período')),
     )
 
-    # Itens do Enum Tipo de Simulacao
+    # Items of the type of simulation Enum
     FINANCIAL_MATH = _('Financial Math')
     INVESTMENT_RETURN = _('Investment Return')
 
-    # Enum de Tipo de Simulacao
+    # Type of simulation Enum
     SIMULATION_TYPE = (
     (FINANCIAL_MATH, _('Matemática Financeira')),
     (INVESTMENT_RETURN, _('Retorno de Investimento')),
     )
 
-    # Definicao do tipo de investimento
+    # Define investment type
     simulation_type = models.CharField(_('Tipo de Simulação'), choices=SIMULATION_TYPE, default=FINANCIAL_MATH, max_length=30)
 
-    # Definicao do resultado a descobrir
+    # Define result to discover
     result_to_discover = models.CharField(_('Resultado a Descobrir'), choices=RESULT_TO_DISCOVER, default=FUTURE_VALUE, max_length=30)
 
     simulation_user = models.ForeignKey(User, verbose_name=_('User'))
 
     def calculate_investment(self):
         
-        """Método que verifica os parâmetros de simulação
-        passados pelo usuário e dispara o método adequado para
-        o cálculo de um dos elementos pertencentes aos módulos
-        de Engenharia Econômica (Matemática Financeira ou Análise de Retorno de Investimento).
+        """This method checks the user after simulation parameters and trigger
+        the appropriate method for calculatin one of the elements belonging to
+        modules of Economic Engineering (Financial Mathematics of Investment)
         """
 
         return SimulationAbstractStrategy.calculate_investment(self)
 
     def __str__(self):
 
-        """Método de conversão para
-        o formato string.
+        """This method is responsible for converting to the format string.
         """
 
         return str(self.present_value)
 
 class SimulationAbstractStrategy:
 
-    """Classe SimulationAbstractStrategy. Classe Abstrata construída
-    para aplicação dos Padrões de Projeto GoF Comportamentais Template
-    Method e Strategy. Possui a definição da assinatura dos métodos de 
-    validação dos resultados e construção dos passos para as operações 
-    de simulação de investimentos.
+    """SimulationAbstractStrategy class. Abstratct class built for the application
+    of GoF Design Patterns Behavioral Template Method and Strategy. It has the
+    signature of the definition of validation methods and methods of construction steps
+    for investment simulation operations.
     """
 
     def calculate_investment(simulation_investment):
 
-        """Método que, dado uma instância de InvestmentSimulation, verifica
-        o módulo de Engenharia Econômica para a simulação requerida pelo
-        usuário. No caso de Matemática Financeira, por exemplo, dependendo dos
-        campos preenchidos pelo usuário, poderá ser calculado Valor Presente ou
-        Valor Futuro. No âmbito de Análise de Retorno de Investimento, tem-se o 
-        cálculo do PayBack (Tempo de retorno de um investimento).
+        """Method that, given an instance of InvestmentSimulation, checks the Economic
+        Engineering. In The case of Financial Mathematics for example, depending on the
+        user populated fields, it can be calculated present value or future value. Within 
+        Investment Retrun Analysis, have been calculating the payback period (return time
+        of investment).
         """
 
         if simulation_investment.simulation_type == InvestmentSimulation.FINANCIAL_MATH:
@@ -257,16 +254,14 @@ class SimulationAbstractStrategy:
 
 class PresentValueStrategy(SimulationAbstractStrategy):
 
-    """Classe PresentValueStrategy. Classe que realiza 
-    extensão da Classe SimulationAbstractStrategy e formaliza
-    todos os comportamentos no âmbito do cálculo do Valor Presente.
+    """PresentValueStrategy class. This class in the extension of SimulationAbstractStrategy
+    and formalizes class all behaviors in the Present Value calcularion.
     """
 
     def calculate_steps(simulation_investment):
 
-        """Método que preenche uma lista com o 
-        resultado de cada iteração do cálculo de
-        Valor Presente.
+        """Method that populates a list with the results of each iterarion of the present
+        value calculation.
         """
 
         result = fv = simulation_investment.future_value
@@ -280,9 +275,9 @@ class PresentValueStrategy(SimulationAbstractStrategy):
 
     def validate_result(simulation_investment,result):
 
-        """Método que verifica se último valor da iteração
-        de cálculos do Valor Presente condiz com a aplicação
-        direta da equação para o período fornecido.
+        """Method that checks if the last value of the present value of the
+        present value calculations iteration matches the direct application
+        of the equation for the givem application.
         """
 
         fv = simulation_investment.future_value
@@ -293,16 +288,15 @@ class PresentValueStrategy(SimulationAbstractStrategy):
 
 class FutureValueStrategy(SimulationAbstractStrategy):
 
-    """Classe FutureValueStrategy. Classe que realiza 
-    extensão da Classe SimulationAbstractStrategy e formaliza
-    todos os comportamentos no âmbito do cálculo do Valor Futuro.
+    """FutureValueStrategy Class. This class realizes the extent of 
+    SimulationAbstractStrategy class and formalizes all behaviours in
+    the calculation of the Future Value.
     """
 
     def calculate_steps(simulation_investment):
 
-        """Método que preenche uma lista com o 
-        resultado de cada iteração do cálculo de
-        Valor Futuro.
+        """Method that populates a list with the result of each
+        iteration of the calculation of the Future Value.
         """
 
         result = pv = simulation_investment.present_value
@@ -316,9 +310,9 @@ class FutureValueStrategy(SimulationAbstractStrategy):
 
     def validate_result(simulation_investment,result):
 
-        """Método que verifica se último valor da iteração
-        de cálculos do Valor Futuro condiz com a aplicação
-        direta da equação para o período fornecido.
+        """Method tha checks if the last value of iteration calculations
+        Future Value is in accordance with the direct application of the 
+        equation for the given period.
         """
 
         pv = simulation_investment.present_value
@@ -329,9 +323,9 @@ class FutureValueStrategy(SimulationAbstractStrategy):
 
 class PayBackStrategy(SimulationAbstractStrategy):
 
-    """Classe PayBackStrategy. Classe que realiza 
-    extensão da Classe SimulationAbstractStrategy e formaliza
-    todos os comportamentos no âmbito do cálculo do PayBack.
+    """PayBackStrategy class. This class realizes the extent of 
+    SimulationAbstractStrategy class and formalizes all behaviors related
+    to the calculation of payback.
     """
 
     def calculate_steps(simulation_investment):
@@ -346,9 +340,8 @@ class PayBackStrategy(SimulationAbstractStrategy):
 
     def validate_result(simulation_investment,result):
 
-        """Método que implementa o cálculo direto para
-        a verificação do PayBack simples para um determinado
-        investimento.
+        """Method that implements the direct calcularion to verify the simple
+        PayBack for a particular investment.
         """
 
         pv = simulation_investment.present_value
@@ -358,8 +351,8 @@ class PayBackStrategy(SimulationAbstractStrategy):
 
 class Category(models.Model):
 
-    """Classe Category. Classe que possui as informações inerentes
-    ao mantenimento de categorias de receitas e despesas.
+    """Category class. This class has information related to the maintenance
+    of revenue and expense categories.
     """
 
     # Name of category recorded
@@ -370,11 +363,11 @@ class Category(models.Model):
     # Is not required
     category_description = models.TextField(_('Description Category'), max_length=150, blank=True)
 
-    # Tipos de Lancamento
+    # Type of entry
     INCOME = _('Income')
     EXPENSE = _('Expense')
 
-    # Enum de Lancamentos
+    # Enum entry
     ENTRY_TYPE = (
     (INCOME, _('Income')),
     (EXPENSE, _('Expense')),
@@ -382,61 +375,60 @@ class Category(models.Model):
 
     def __str__(self):
 
-        """Método de conversão para
-        o formato string.
+        """This method is responsible for converting to the format string.
         """
 
         return self.category_name
 
 class Entry(models.Model):
 
-    """Classe Entry. Classe que possui as informações detalhadas
-    de um determinado lançamento, podendo ser receita ou despesa.
+    """Entry class. This class has detailed information for a particular
+    entry, may be income or expense.
     """
 
-    # Empresa/Organizacao/Entidade fonte da requisicao do Lancamento
+    # Company or Organization source Launch of request
     entry_source = models.CharField(_('Entry Source'), max_length=50, blank=True)
 
-    # Registro do Valor do Lancamento
+    # Registry of the value entry
     entry_value = models.DecimalField(_('Entry Value'), decimal_places=2, max_digits=12)
     
-    # Data de Vencimento
+    # Due date
     entry_due_date = models.DateField(_('Due Date'))
 
-    # Data de Registro do Lancamento
+    # Registry of the entry registration date
     entry_registration_date = models.DateField(_('Registration Date'))
 
-    # Descricao do Lancamento
+    # Entry description
     entry_description = models.TextField(_('Entry Description'), max_length=150, blank=True)
 
-    # Quantidade de Parcelas
+    # Quota quantity
     entry_quota_amount = models.PositiveIntegerField(_('Entry Quota Amount'), default=1)
 
-    # Tipo de Periodicidade do Lancamento
+    # Periodicity ty of entry
     entry_periodicity = models.CharField(_('Entry Periodicity Type'), choices=Finance.PERIODICITY, default=Finance.MONTHLY, max_length=20)
     
-    # Tipo do Lancamento
+    # Entry Type
     entry_type = models.CharField(_('Entry Type'), choices=Category.ENTRY_TYPE, default=Category.EXPENSE, max_length=20)
 
-    # Relacionamento de 1 pra n com Categoria de lancamento
+    # Relationship between category and launch
     category = models.ForeignKey(Category, verbose_name=_('Entry Category'))
 
-    # Relacionamento de 1 pra n com Usuario
+    # User relationship
     entry_user = models.ForeignKey(User, verbose_name=_('User'))
 
-    # Valores Possiveis de Estado de Valor e Parcela
+    # Possible values of state value and portion
     OVERDUE = _('Overdue')
     NO_OVERDUE = _('No Overdue Yet')
     ALL_ENTRY = _('All Entry')
 
-    # Enum de Estado de um Valor
+    # State of value Enum
     VALUE_STATE = (
         (OVERDUE, _('Overdue')),
         (NO_OVERDUE, _('No Overdue Yet')),
         (ALL_ENTRY, _('All Entry')),
     )
 
-    # Enum de Estado de uma Parcela
+    # State of quota Enum
     QUOTA_STATE = (
         (OVERDUE, _('Overdue')),
         (NO_OVERDUE, _('No Overdue Yet')),
@@ -444,8 +436,7 @@ class Entry(models.Model):
 
     def __str__(self):
 
-        """Método de conversão para
-        o formato string.
+        """This method is responsible for converting to the format string.
         """
 
         return self.entry_description

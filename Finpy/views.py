@@ -59,6 +59,27 @@ class UpdateProfileView(View):
             else:
                 return HttpResponse(_("This isn't your profile"))
 
+    @method_decorator(login_required)
+    def post(self, request, profile_id=None):
+
+        if profile_id is not None:
+            profile = UserProfile.objects.get(pk=int(profile_id))
+            user = profile.user
+            if user == request.user:
+                form = self.update_form(data=request.POST, instance=profile)
+                if form.is_valid():
+                    form.save()
+
+                context = {
+                    'form': form,
+                    'title': _('User Profile Update'),
+                }
+
+                if self.extra_context is not None:
+                    context.update(self.extra_context)
+
+                return TemplateResponse(request, self.template_name, context,
+                    current_app=self.current_app)
 
 @login_required
 def update_profile(request, profile_id=None, template_name='profile/update.html',

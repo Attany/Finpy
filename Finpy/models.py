@@ -225,28 +225,49 @@ class SimulationAbstractStrategy:
     signature of the definition of validation methods and methods of construction steps
     for investment simulation operations.
     """
+    def calculate_investment_financial_math(simulation_investment):
+        
+        """ Calculates the investments simulation for Financial Math type. """
+
+        if simulation_investment.result_to_discover == InvestmentSimulation.PRESENT_VALUE:
+            result_list = PresentValueStrategy.calculate_steps(simulation_investment)
+            PresentValueStrategy.validate_result(simulation_investment,result_list[-1])
+        elif simulation_investment.result_to_discover == InvestmentSimulation.FUTURE_VALUE:
+            result_list = FutureValueStrategy.calculate_steps(simulation_investment)
+            FutureValueStrategy.validate_result(simulation_investment,result_list[-1])
+        else:
+            result_list = []
+
+        return result_list
+
+    def calculate_investment_return_investment(simulation_investment):
+
+        """ Calculates the investments simulation for Investment Return type. """
+
+        if simulation_investment.result_to_discover == InvestmentSimulation.PERIOD_VALUE:
+            result_list = PayBackStrategy.calculate_steps(simulation_investment)
+            PayBackStrategy.validate_result(simulation_investment, result_list[0])
+        else:
+            result_list = []
+
+        return result_list
 
     def calculate_investment(simulation_investment):
 
         """Method that, given an instance of InvestmentSimulation, checks the Economic
         Engineering. In The case of Financial Mathematics for example, depending on the
         user populated fields, it can be calculated present value or future value. Within 
-        Investment Retrun Analysis, have been calculating the payback period (return time
+        Investment Return Analysis, have been calculating the payback period (return time
         of investment).
         """
-
         if simulation_investment.simulation_type == InvestmentSimulation.FINANCIAL_MATH:
-            if simulation_investment.result_to_discover == InvestmentSimulation.PRESENT_VALUE:
-                result_list = PresentValueStrategy.calculate_steps(simulation_investment)
-                PresentValueStrategy.validate_result(simulation_investment,result_list[-1])
-            elif simulation_investment.result_to_discover == InvestmentSimulation.FUTURE_VALUE:
-                result_list = FutureValueStrategy.calculate_steps(simulation_investment)
-                FutureValueStrategy.validate_result(simulation_investment,result_list[-1])
+            result_list = SimulationAbstractStrategy.calculate_investment_financial_math(simulation_investment)
+        
         elif simulation_investment.simulation_type == InvestmentSimulation.INVESTMENT_RETURN:
-        	if simulation_investment.result_to_discover == InvestmentSimulation.PERIOD_VALUE:
-        		result_list = PayBackStrategy.calculate_steps(simulation_investment)
-        		PayBackStrategy.validate_result(simulation_investment, result_list[0])
+            result_list = SimulationAbstractStrategy.calculate_investment_return_investment(simulation_investment)
+
         return result_list
+
 
     def calculate_steps(simulation_investment): pass
 

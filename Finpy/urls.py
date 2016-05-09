@@ -40,7 +40,7 @@ urlpatterns = patterns('',
                         
                         # Investment simulation
                         # Pattern: finpy/investment/simulate
-                        url(r'^investment/simulate/$', views.simulate_investment, name='simulate_investment'),
+                        url(r'^investment/simulate/$', views.InvestmentSimulationView.as_view(), name='simulate_investment'),
 
                         # Investment simulations list
                         # Pattern: finpy/investment/list

@@ -101,26 +101,48 @@ def index(request, template_name='Finpy/homepage.html'):
     }
     return TemplateResponse(request, template_name, context)
 
-@login_required
-def simulate_investment(request, template_name='investment/simulate.html',
-    investment_simulation_form=InvestmentSimulationForm, current_app=None, extra_context=None):
-    if request.method == "POST":
+class InvestmentSimulationView(View):
+
+    # Allowed methods on the view
+    http_method_names = [u'get', u'post']
+
+    template_name = 'investment/simulate.html'
+    investment_simulation_form = InvestmentSimulationForm
+    current_app = None
+    extra_context = None
+
+    @method_decorator(login_required)
+    def get(self, request):
+        form = self.investment_simulation_form()
+        context =self.check_extra_content(form)
+        response = TemplateResponse(request, self.template_name, context, current_app=self.current_app)        
+        
+        return response
+
+    @method_decorator(login_required)
+    def post(self, request):
+        
         investment_simulation = InvestmentSimulation()
         investment_simulation.simulation_user = request.user
-        form = investment_simulation_form(data=request.POST, instance=investment_simulation)
+        form = self.investment_simulation_form(data=request.POST, instance=investment_simulation)
         if form.is_valid():
             form.save()
-    else:
-        form = investment_simulation_form()
 
-    context = {
-        'form': form,
-        'title': _('Investment Simulation')
-    }
-    if extra_context is not None:
-        context.update(extra_context)
-    return TemplateResponse(request, template_name, context,
-        current_app=current_app)
+        context = self.check_extra_content(form)
+        response = TemplateResponse(request, self.template_name, context, current_app=self.current_app)        
+        
+        return response
+
+    def check_extra_content(self, form):
+        context = {
+            'form': form,
+            'title': _('Investment Simulation')
+        }
+
+        if self.extra_context is not None:
+            context.update(extra_context)
+
+        return context
 
 @login_required
 def list_simulations(request, template_name='investment/list.html',

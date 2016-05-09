@@ -148,3 +148,34 @@ class FinpyViewsTestCase(TestCase):
 		#  did not let the user update another profile
 		expected_message = _("This isn't your profile")
 		self.assertIn(expected_message, str(update_profile_response.content, 'utf-8'))
+
+	def test_simulate_investment_get_view(self):
+
+		""" Test if the simulate investment view respond correctly when using GET method """
+
+		# Logging in with user 1
+		logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+
+		url_to_test = reverse('simulate_investment')
+
+		response = self.client.get(url_to_test, follow=True)
+		self.assertEqual(response.status_code, self.RESPONSE_OK)
+
+	def test_simulate_investment_post_view(self):
+
+		""" Test if the simulate investment view respond correctly when using POST method """
+
+		# Logging in with user 1
+		logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+
+		url_to_test = reverse('simulate_investment')
+
+		# An arbitrary present value
+		present_value = "9857484"
+		post_data = {
+			'present_value': present_value
+		}
+
+		response = self.client.post(url_to_test, post_data, follow=True)
+		self.assertEqual(response.status_code, self.RESPONSE_OK)
+		self.assertIn(present_value, str(response.content))

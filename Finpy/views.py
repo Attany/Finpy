@@ -121,7 +121,7 @@ class InvestmentSimulationView(View):
 
     @method_decorator(login_required)
     def post(self, request):
-        
+
         investment_simulation = InvestmentSimulation()
         investment_simulation.simulation_user = request.user
         form = self.investment_simulation_form(data=request.POST, instance=investment_simulation)

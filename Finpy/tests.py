@@ -90,10 +90,58 @@ class FinpyViewsTestCase(TestCase):
 		# Logging in with user 1
 		logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
 
-		# Try to access the update profile page of user 2
+		# Trying to access the update profile page of user 2
 		url_to_test = reverse('update_profile', kwargs={'profile_id': self.user_profile2.user.id})
 
 		update_profile_response = self.client.get(url_to_test, follow=True)
+		self.assertEqual(update_profile_response.status_code, self.RESPONSE_OK)
+
+		# If this text appear on the response page, the system 
+		#  did not let the user update another profile
+		expected_message = _("This isn't your profile")
+		self.assertIn(expected_message, str(update_profile_response.content, 'utf-8'))
+
+	def test_update_profile_post_view(self):
+
+		""" Test if the profile view respond correctly when using POST method """
+
+		# Logging in with user 1
+		logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+
+		url_to_test = reverse('update_profile', kwargs={'profile_id': self.user_profile.user.id})
+
+		# Trying to update the user CPF to 98745678345
+		new_cpf = "98745678345"
+		post_data = {
+			'profile_id': self.user_profile.user.id,
+			'cpf': new_cpf
+		}
+
+		update_profile_response = self.client.post(url_to_test, post_data, follow=True)
+		self.assertEqual(update_profile_response.status_code, self.RESPONSE_OK)
+
+		# If the new CPF appears on the page, the request was sucessfully done
+		self.assertIn(new_cpf, str(update_profile_response.content))
+
+	def test_update_another_person_profile_post_view(self):
+
+		""" Test if the profile view respond correctly when trying to access 
+			another person profile using POST method """
+
+		# Logging in with user 1
+		logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+
+		# Try to access the update profile page of user 2
+		url_to_test = reverse('update_profile', kwargs={'profile_id': self.user_profile2.user.id})
+
+		# Trying to update the user CPF to 98745678345
+		new_cpf = "98745678345"
+		post_data = {
+			'profile_id': self.user_profile.user.id,
+			'cpf': new_cpf
+		}
+
+		update_profile_response = self.client.post(url_to_test, post_data, follow=True)
 		self.assertEqual(update_profile_response.status_code, self.RESPONSE_OK)
 
 		# If this text appear on the response page, the system 

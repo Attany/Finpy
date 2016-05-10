@@ -269,12 +269,12 @@ class PresentValueStrategy(SimulationAbstractStrategy):
         Valor Presente.
         """
 
-        result = fv = simulation_investment.future_value
+        result = future_value = simulation_investment.future_value
         period = simulation_investment.period_value
         rate = simulation_investment.rate_value/100
-        result_list = [fv]
+        result_list = [future_value]
         for k in range(1, period):
-            result = fv/((1 + rate)**k)
+            result = future_value/((1 + rate)**k)
             result_list.append(result)
         return result_list
 
@@ -285,10 +285,10 @@ class PresentValueStrategy(SimulationAbstractStrategy):
         direta da equação para o período fornecido.
         """
 
-        fv = simulation_investment.future_value
+        future_value = simulation_investment.future_value
         period = simulation_investment.period_value
         rate = simulation_investment.rate_value/100
-        return fv/((1 + rate)**period) == result
+        return future_value((1 + rate)**period) == result
 
 
 class FutureValueStrategy(SimulationAbstractStrategy):
@@ -305,10 +305,10 @@ class FutureValueStrategy(SimulationAbstractStrategy):
         Valor Futuro.
         """
 
-        result = pv = simulation_investment.present_value
+        result = present_value = simulation_investment.present_value
         period = simulation_investment.period_value
         rate = simulation_investment.rate_value/100
-        result_list = [pv]
+        result_list = [present_value]
         for k in range(1, period):
             result += (result*rate)
             result_list.append(result)
@@ -321,10 +321,10 @@ class FutureValueStrategy(SimulationAbstractStrategy):
         direta da equação para o período fornecido.
         """
 
-        pv = simulation_investment.present_value
+        present_value = simulation_investment.present_value
         period = simulation_investment.period_value
         rate = simulation_investment.rate_value/100
-        return pv*((1 + rate)**period) == result
+        return present_value*((1 + rate)**period) == result
 
 
 class PayBackStrategy(SimulationAbstractStrategy):
@@ -335,13 +335,13 @@ class PayBackStrategy(SimulationAbstractStrategy):
     """
 
     def calculate_steps(simulation_investment):
-    	pv = simulation_investment.present_value
-    	pmt = simulation_investment.payment_value
-    	result_list = [pv/pmt]
-    	pv -= pmt
-    	while pv > 0:
-    		result_list.append(pv/pmt)
-    		pv -= pmt
+    	present_value = simulation_investment.present_value
+    	payment_value = simulation_investment.payment_value
+    	result_list = [present_value/payment_value]
+    	present_valuev -= payment_value
+    	while present_value > 0:
+    		result_list.append(present_value/payment_value)
+    		present_value -= payment_value
     	return result_list
 
     def validate_result(simulation_investment,result):
@@ -351,9 +351,9 @@ class PayBackStrategy(SimulationAbstractStrategy):
         investimento.
         """
 
-        pv = simulation_investment.present_value
-        pmt = simulation_investment.payment_value
-        return pv/pmt == result
+        present_value = simulation_investment.present_value
+        payment_value = simulation_investment.payment_value
+        return present_value/payment_value == result
 
 
 class Category(models.Model):

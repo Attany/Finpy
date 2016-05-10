@@ -13,15 +13,46 @@ from Finpy.forms import UserCreationForm, ProfileUpdateForm, EntryForm, Investme
 
 # Create your views here.
 
-class UpdateProfileView(View):
+class ContextMixin:
+    """Class with common methods of views"""
+    
+    template_name = ""
+    form = None
+    form_title = ""
+    current_app = None
+    extra_context = None
+    context_form = None
+
+    def get_context(self):
+
+        context = {
+            'form': self.context_form,
+            'title': _(self.form_title),
+        }
+
+        if self.extra_context is not None:
+            context.update(self.extra_context)
+        
+        return context
+
+    def generate_template_response(self, request):
+
+        context = self.get_context()
+            
+        response = TemplateResponse(request, self.template_name, context, 
+                current_app=self.current_app)
+
+        return response
+
+
+class UpdateProfileView(View, ContextMixin):
 
     # Allowed methods on the view
     http_method_names = [u'get', u'post']
 
-    template_name='profile/update.html'
-    update_form=ProfileUpdateForm
-    current_app=None
-    extra_context=None
+    template_name = 'profile/update.html'
+    form = ProfileUpdateForm
+    form_title = 'User Profile Update'
 
     @method_decorator(login_required)
     def get(self, request, profile_id=None):
@@ -29,12 +60,9 @@ class UpdateProfileView(View):
 
         user_auth = self.check_user(request, profile_id)
         if user_auth['authenticated']:
-            form = self.update_form(instance=user_auth['profile'])
-
-            context = self.check_extra_content(form)
-            
-            response = TemplateResponse(request, self.template_name, context, 
-                current_app=self.current_app)
+            form = self.form(instance=user_auth['profile'])
+            self.context_form = form
+            response = self.generate_template_response(request)
         else:
             response = HttpResponse(_("This isn't your profile"))
 
@@ -46,14 +74,11 @@ class UpdateProfileView(View):
 
         user_auth = self.check_user(request, profile_id)
         if user_auth['authenticated']:
-            form = self.update_form(data=request.POST, instance=user_auth['profile'])
+            form = self.form(data=request.POST, instance=user_auth['profile'])
             if form.is_valid():
                 form.save()
-
-            context = self.check_extra_content(form)
-            
-            response = TemplateResponse(request, self.template_name, context, 
-                current_app=self.current_app)
+            self.context_form = form
+            response = self.generate_template_response(request)
         else:
             response = HttpResponse(_("This isn't your profile"))
 
@@ -73,19 +98,39 @@ class UpdateProfileView(View):
 
         return current_user_auth
 
-    def check_extra_content(self, form):
-        """ Checks if have extra content to add in the context """
 
-        context = {
-            'form': form,
-            'title': _('User Profile Update'),
-        }
+class InvestmentSimulationView(View, ContextMixin):
 
-        if self.extra_context is not None:
-            context.update(self.extra_context)
+    # Allowed methods on the view
+    http_method_names = [u'get', u'post']
+
+    template_name = 'investment/simulate.html'
+    form = InvestmentSimulationForm
+    form_title = 'Investment Simulation'
+
+    @method_decorator(login_required)
+    def get(self, request):
+        """ Get the investment simulation form """
+
+        form = self.form()
+        self.context_form = form
+        response = self.generate_template_response(request)
+
+        return response
+
+    @method_decorator(login_required)
+    def post(self, request):
+        """ Create an investment simulation with the given information """
+
+        investment_simulation = InvestmentSimulation()
+        investment_simulation.simulation_user = request.user
+        form = self.form(data=request.POST, instance=investment_simulation)
+        if form.is_valid():
+            form.save()
+        self.context_form = form
+        response = self.generate_template_response(request)
         
-        return context
-
+        return response
 
 def about_page(request, template_name='Finpy/about.html'):
     return TemplateResponse(request, template_name)
@@ -100,49 +145,6 @@ def index(request, template_name='Finpy/homepage.html'):
         'title': _('Home'),
     }
     return TemplateResponse(request, template_name, context)
-
-class InvestmentSimulationView(View):
-
-    # Allowed methods on the view
-    http_method_names = [u'get', u'post']
-
-    template_name = 'investment/simulate.html'
-    investment_simulation_form = InvestmentSimulationForm
-    current_app = None
-    extra_context = None
-
-    @method_decorator(login_required)
-    def get(self, request):
-        form = self.investment_simulation_form()
-        context =self.check_extra_content(form)
-        response = TemplateResponse(request, self.template_name, context, current_app=self.current_app)        
-        
-        return response
-
-    @method_decorator(login_required)
-    def post(self, request):
-
-        investment_simulation = InvestmentSimulation()
-        investment_simulation.simulation_user = request.user
-        form = self.investment_simulation_form(data=request.POST, instance=investment_simulation)
-        if form.is_valid():
-            form.save()
-
-        context = self.check_extra_content(form)
-        response = TemplateResponse(request, self.template_name, context, current_app=self.current_app)        
-        
-        return response
-
-    def check_extra_content(self, form):
-        context = {
-            'form': form,
-            'title': _('Investment Simulation')
-        }
-
-        if self.extra_context is not None:
-            context.update(extra_context)
-
-        return context
 
 @login_required
 def list_simulations(request, template_name='investment/list.html',

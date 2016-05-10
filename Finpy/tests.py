@@ -68,7 +68,6 @@ class FinpyViewsTestCase(TestCase):
 		self.assertEqual(response_entry_list.status_code, 302)
 
 	def test_update_profile_get_view(self):
-
 		""" Test if the profile view respond correctly when using GET method """
 
 		# Logging in with user 1
@@ -83,7 +82,6 @@ class FinpyViewsTestCase(TestCase):
 		self.assertIn(self.user_profile.cpf, str(update_profile_response.content))
 	
 	def test_update_another_person_profile_get_view(self):
-
 		""" Test if the profile view respond correctly when trying to access 
 			another person profile using GET method """
 
@@ -102,7 +100,6 @@ class FinpyViewsTestCase(TestCase):
 		self.assertIn(expected_message, str(update_profile_response.content, 'utf-8'))
 
 	def test_update_profile_post_view(self):
-
 		""" Test if the profile view respond correctly when using POST method """
 
 		# Logging in with user 1
@@ -124,7 +121,6 @@ class FinpyViewsTestCase(TestCase):
 		self.assertIn(new_cpf, str(update_profile_response.content))
 
 	def test_update_another_person_profile_post_view(self):
-
 		""" Test if the profile view respond correctly when trying to access 
 			another person profile using POST method """
 
@@ -150,7 +146,6 @@ class FinpyViewsTestCase(TestCase):
 		self.assertIn(expected_message, str(update_profile_response.content, 'utf-8'))
 
 	def test_simulate_investment_get_view(self):
-
 		""" Test if the simulate investment view respond correctly when using GET method """
 
 		# Logging in with user 1
@@ -162,7 +157,6 @@ class FinpyViewsTestCase(TestCase):
 		self.assertEqual(response.status_code, self.RESPONSE_OK)
 
 	def test_simulate_investment_post_view(self):
-
 		""" Test if the simulate investment view respond correctly when using POST method """
 
 		# Logging in with user 1
@@ -179,3 +173,32 @@ class FinpyViewsTestCase(TestCase):
 		response = self.client.post(url_to_test, post_data, follow=True)
 		self.assertEqual(response.status_code, self.RESPONSE_OK)
 		self.assertIn(present_value, str(response.content))
+
+	def test_create_entry_get_view(self):
+		""" Test if the create entry view respond correctly when using GET method """
+
+		# Logging in with user 1
+		logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+
+		url_to_test = reverse('create_entry')
+
+		response = self.client.get(url_to_test, follow=True)
+		self.assertEqual(response.status_code, self.RESPONSE_OK)
+
+	def test_create_entry_post_view(self):
+		""" Test if the create view respond correctly when using POST method """
+
+		# Logging in with user 1
+		logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+
+		url_to_test = reverse('create_entry')
+
+		# An arbitrary entry value
+		entry_value = "99899"
+		post_data = {
+			'entry_value': entry_value
+		}
+
+		response = self.client.post(url_to_test, post_data, follow=True)
+		self.assertEqual(response.status_code, self.RESPONSE_OK)
+		self.assertIn(entry_value, str(response.content))

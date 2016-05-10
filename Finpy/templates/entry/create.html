@@ -5,7 +5,7 @@
 
 {% block content %}
 <div id="container">
-<form method="post" class="form" action="{% url 'Finpy.views.create_entry' %}">
+<form method="post" class="form" action="{% url 'create_entry' %}">
   {% csrf_token %}
   {% bootstrap_form form %}
   {% buttons %}

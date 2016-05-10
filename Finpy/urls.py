@@ -23,7 +23,7 @@ urlpatterns = patterns('',
 
                         # New entry page
                         # Pattern: finpy/entry/create
-                        url(r'^entry/create/$', views.create_entry, name='create_entry'),
+                        url(r'^entry/create/$', views.CreateEntryView.as_view(), name='create_entry'),
 
                         # List of entries
                         # Pattern: finpy/entry/list
@@ -40,7 +40,7 @@ urlpatterns = patterns('',
                         
                         # Investment simulation
                         # Pattern: finpy/investment/simulate
-                        url(r'^investment/simulate/$', views.simulate_investment, name='simulate_investment'),
+                        url(r'^investment/simulate/$', views.InvestmentSimulationView.as_view(), name='simulate_investment'),
 
                         # Investment simulations list
                         # Pattern: finpy/investment/list

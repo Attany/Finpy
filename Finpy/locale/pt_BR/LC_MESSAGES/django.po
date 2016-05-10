@@ -226,7 +226,7 @@ msgstr ""
 
 #: templates/Finpy/base.html:66 templates/investment/simulate.html:13
 msgid "Simulate"
-msgstr ""
+msgstr "Simular"
 
 #: templates/Finpy/base.html:74 templates/Finpy/old_base.html:26
 msgid "Personal Data"

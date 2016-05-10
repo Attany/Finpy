@@ -5,12 +5,12 @@
 
 {% block content %}
 <div id="container">
-<form method="post" class="form" action="{% url 'Finpy.views.simulate_investment' %}">
+<form method="post" class="form" action="{% url 'simulate_investment' %}">
   {% csrf_token %}
   {% bootstrap_form form %}
   {% buttons %}
   <button type="submit" class="btn btn-primary">
-    {% bootstrap_icon "star" %} {% trans 'Simular' %}
+    {% bootstrap_icon "star" %} {% trans 'Simulate' %}
   </button>
   {% endbuttons %}
 

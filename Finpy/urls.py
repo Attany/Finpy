@@ -23,7 +23,7 @@ urlpatterns = patterns('',
 
                         # New entry page
                         # Pattern: finpy/entry/create
-                        url(r'^entry/create/$', views.create_entry, name='create_entry'),
+                        url(r'^entry/create/$', views.CreateEntryView.as_view(), name='create_entry'),
 
                         # List of entries
                         # Pattern: finpy/entry/list

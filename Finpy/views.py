@@ -13,8 +13,8 @@ from Finpy.forms import UserCreationForm, ProfileUpdateForm, EntryForm, Investme
 
 # Create your views here.
 
-class ContextMixin:
-    """Class with common methods of views"""
+class FormContextMixin:
+    """Class with common methods of form views"""
     
     template_name = ""
     form = None
@@ -45,7 +45,7 @@ class ContextMixin:
         return response
 
 
-class UpdateProfileView(View, ContextMixin):
+class UpdateProfileView(View, FormContextMixin):
 
     # Allowed methods on the view
     http_method_names = [u'get', u'post']
@@ -99,7 +99,7 @@ class UpdateProfileView(View, ContextMixin):
         return current_user_auth
 
 
-class InvestmentSimulationView(View, ContextMixin):
+class InvestmentSimulationView(View, FormContextMixin):
 
     # Allowed methods on the view
     http_method_names = [u'get', u'post']
@@ -130,6 +130,40 @@ class InvestmentSimulationView(View, ContextMixin):
         self.context_form = form
         response = self.generate_template_response(request)
         
+        return response
+
+
+class CreateEntryView(View, FormContextMixin):
+
+    # Allowed methods on the view
+    http_method_names = [u'get', u'post']
+
+    template_name = 'entry/create.html'
+    form = EntryForm
+    form_title = 'Entry Creation'
+
+    @method_decorator(login_required)
+    def get(self, request):
+        """ Get the investment simulation form """
+
+        self.context_form = self.form()
+        response = self.generate_template_response(request)
+
+        return response
+
+    @method_decorator(login_required)
+    def post(self, request):
+        """ Create a new entry with the given information """
+
+        entry = Entry()
+        entry.entry_user = request.user
+        form = self.form(data=request.POST, instance=entry)
+        if form.is_valid():
+            form.save()
+
+        self.context_form = form
+        response = self.generate_template_response(request)
+
         return response
 
 def about_page(request, template_name='Finpy/about.html'):
@@ -166,27 +200,6 @@ def list_entry(request, template_name='entry/list.html',
     context = {
         'entries': entries,
         'title': _('Entry List')
-    }
-    if extra_context is not None:
-        context.update(extra_context)
-    return TemplateResponse(request, template_name, context,
-        current_app=current_app)
-
-@login_required
-def create_entry(request, template_name='entry/create.html',
-    entry_form=EntryForm, current_app=None, extra_context=None):
-    if request.method == "POST":
-        entry = Entry()
-        entry.entry_user = request.user
-        form = entry_form(data=request.POST, instance=entry)
-        if form.is_valid():
-            form.save()
-    else:
-        form = entry_form()
-
-    context = {
-        'form': form,
-        'title': _('Entry Creation')
     }
     if extra_context is not None:
         context.update(extra_context)

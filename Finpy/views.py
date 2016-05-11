@@ -38,7 +38,7 @@ class FormContextMixin:
     def generate_template_response(self, request):
 
         context = self.get_context()
-            
+
         response = TemplateResponse(request, self.template_name, context, 
                 current_app=self.current_app)
 
@@ -58,13 +58,13 @@ class UpdateProfileView(View, FormContextMixin):
     def get(self, request, profile_id=None):
         """ Get the previous data of the current user to update profile """
 
-        user_auth = self.check_user(request, profile_id)
-        if user_auth['authenticated']:
-            form = self.form(instance=user_auth['profile'])
+        try:
+            profile = self.check_user(request, profile_id)
+            form = self.form(instance=profile)
             self.context_form = form
             response = self.generate_template_response(request)
-        else:
-            response = HttpResponse(_("This isn't your profile"))
+        except Exception as e:        
+            response = HttpResponse(str(e))
 
         return response
 
@@ -72,31 +72,31 @@ class UpdateProfileView(View, FormContextMixin):
     def post(self, request, profile_id=None):
         """ Update the user profile with given information """
 
-        user_auth = self.check_user(request, profile_id)
-        if user_auth['authenticated']:
-            form = self.form(data=request.POST, instance=user_auth['profile'])
+        try:
+            profile = self.check_user(request, profile_id)
+            form = self.form(data=request.POST, instance=profile)
             if form.is_valid():
                 form.save()
             self.context_form = form
             response = self.generate_template_response(request)
-        else:
-            response = HttpResponse(_("This isn't your profile"))
+        except Exception as e:        
+            response = HttpResponse(str(e))
 
         return response
 
     def check_user(self, request, user_id):
         """ Check if the current user is the update profile request user"""
 
-        current_user_auth = {'authenticated': False, 'profile': None}
         if user_id is not None:
             profile = UserProfile.objects.get(pk=int(user_id))
             user = profile.user
             if user == request.user:
-                current_user_auth = {'authenticated': True, 'profile': profile}
+                return profile
             else:
-                current_user_auth = {'authenticated': False, 'profile': None}
+                raise Exception(_("This isn't your profile"))
+        else:
+            raise Exception(_("This isn't your profile"))
 
-        return current_user_auth
 
 
 class InvestmentSimulationView(View, FormContextMixin):

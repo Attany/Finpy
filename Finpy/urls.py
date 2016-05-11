@@ -19,7 +19,7 @@ urlpatterns = patterns('',
 
                         # Register page
                         # Pattern: finpy/signup
-                        url(r'^signup/$', views.signup, {'template_name': 'accounts/signup.html'}, name='signup'),
+                        url(r'^signup/$', views.SignupView.as_view(), {'template_name': 'accounts/signup.html'}, name='signup'),
 
                         # New entry page
                         # Pattern: finpy/entry/create

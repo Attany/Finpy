@@ -269,28 +269,48 @@ def delete_entry(request, entry_id=None, template_name='entry/delete.html',
         else:
             return HttpResponse(_("This isn't your profile"))
 
-def signup(request, template_name='registration/signup.html',
-    post_signup_redirect=None, signup_form=UserCreationForm,
-    current_app=None, extra_context=None):
-    if post_signup_redirect is None:
-        post_signup_redirect = reverse('login')
-    else:
-        post_signup_redirect = resolve_url(post_signup_redirect)
-    if request.method == "POST":
-        form = signup_form(data=request.POST)
+class SignupView(View, FormContextMixin):
+
+    # Allowed methods on the view
+    http_method_names = [u'get', u'post']
+
+    form = UserCreationForm
+    form_title = 'User Registration'
+
+    def get(self, request, template_name='registration/signup.html',
+            post_signup_redirect=None, current_app=None, extra_context=None):
+
+        self.template_name = template_name
+
+        if post_signup_redirect is None:
+            post_signup_redirect = reverse('login')
+        else:
+            post_signup_redirect = resolve_url(post_signup_redirect)
+
+        self.context_form = self.form()
+        response = self.generate_template_response(request)
+
+        return response
+
+    def post(self, request, template_name='registration/signup.html',
+             post_signup_redirect=None, current_app=None, extra_context=None):
+
+        self.template_name = template_name
+
+        if post_signup_redirect is None:
+            post_signup_redirect = reverse('login')
+        else:
+            post_signup_redirect = resolve_url(post_signup_redirect)
+
+        form = self.form(data=request.POST)
         if form.is_valid():
             user = form.save()
             profile = UserProfile()
             profile.user = user
             profile.save()
-            return HttpResponseRedirect(post_signup_redirect)
-    else:
-        form = signup_form()
-    context = {
-        'form': form,
-        'title': _('User Registration'),
-    }
-    if extra_context is not None:
-        context.update(extra_context)
-    return TemplateResponse(request, template_name, context,
-        current_app=current_app)
+            response = HttpResponseRedirect(post_signup_redirect)
+        else:
+            self.context_form = form
+            response = generate_template_response(request)
+
+        return response

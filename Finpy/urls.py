@@ -36,7 +36,7 @@ urlpatterns = patterns('',
 
                         # Update an entry
                         # Pattern: finpy/entry/update/id , where id is the number of entry id
-                        url(r'^entry/update/(?P<entry_id>\d+)$', views.update_entry, name='update_entry'),
+                        url(r'^entry/update/(?P<entry_id>\d+)$', views.UpdateEntryView.as_view(), name='update_entry'),
                         
                         # Investment simulation
                         # Pattern: finpy/investment/simulate

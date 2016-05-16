@@ -1,5 +1,5 @@
 from django.test import TestCase
-from Finpy.models import InvestmentSimulation, SimulationAbstractStrategy
+from Finpy.models import InvestmentSimulation, SimulationAbstractStrategy, Entry, Category
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -21,6 +21,7 @@ class FinpyViewsTestCase(TestCase):
 
     def setUp(self):
         # Creating test user profile. The UserProfile requires a Django User
+
         self.user1_password = 'chuck'
         user1 = User.objects.create_user(username='Chuck', password=self.user1_password)
         self.user_profile = UserProfile.objects.create(user=user1, cpf="12345678912")
@@ -28,6 +29,17 @@ class FinpyViewsTestCase(TestCase):
         self.user2_password = 'john'
         user2 = User.objects.create_user(username='John', password=self.user2_password)
         self.user_profile2 = UserProfile.objects.create(user=user2, cpf="98765432198")
+
+        self.category = Category.objects.create(category_name="Test Category",
+                                           category_description="Test category description")
+
+        self.user1_entry = Entry.objects.create(entry_source="Test Source", entry_value="10000",
+                                           entry_due_date="2019-03-29",
+                                           entry_periodicity=_('Monthly'),
+                                           entry_registration_date="2019-03-20",
+                                           entry_description="Test user 1 entry description",
+                                           entry_quota_amount="10", entry_type=_('Income'),
+                                           category=self.category, entry_user=user1)
 
     def test_login(self):
 
@@ -194,6 +206,51 @@ class FinpyViewsTestCase(TestCase):
         response = self.client.post(url_to_test, post_data, follow=True)
         self.assertEqual(response.status_code, self.RESPONSE_OK)
         self.assertIn(entry_value, str(response.content))
+
+    def test_update_entry_get_view(self):
+        """ Test if the update entry view respond correctly when using GET method """
+
+        # Logging in with user 1
+        logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+
+        url_to_test = reverse('update_entry', kwargs={'entry_id': self.user1_entry.id})
+
+        response = self.client.get(url_to_test, follow=True)
+        self.assertEqual(response.status_code, self.RESPONSE_OK)
+        self.assertIn(self.user1_entry.entry_source, str(response.content))
+        self.assertIn(self.user1_entry.entry_value, str(response.content))
+        self.assertIn(self.user1_entry.entry_description, str(response.content))
+
+    def test_update_entry_post_view(self):
+        """ Test if the update entry view respond correctly when using POST1 method """
+
+        # Logging in with user 1
+        logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+
+        url_to_test = reverse('update_entry', kwargs={'entry_id': self.user1_entry.id})
+
+        post_data = {
+            'entry_source': "Test Source Updated",
+            'entry_value': "10000.00",
+            'entry_due_date': "2019-03-29", 
+            'entry_periodicity': _('Monthly'), 
+            'entry_registration_date': "2019-03-20",
+            'entry_description': "Test user 1 entry description updated",
+            'entry_quota_amount': "5",
+            'entry_type': _('Income'),
+            'category': self.category.id,
+        }
+
+        # Test if the post was successfully done
+        response = self.client.post(url_to_test, post_data, follow=True)
+        self.assertEqual(response.status_code, self.RESPONSE_OK)
+
+        # Test if the new entry data was saved
+        response = self.client.get(url_to_test, follow=True)
+        entry = Entry.objects.get(pk=int(self.user1_entry.id))
+        self.assertEqual(post_data['entry_source'], entry.entry_source)
+        self.assertEqual(post_data['entry_description'], entry.entry_description)
+
 
 class FinpyModelsTestCase(TestCase):
 

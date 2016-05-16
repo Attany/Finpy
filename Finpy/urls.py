@@ -29,7 +29,6 @@ urlpatterns = patterns('',
                         # Pattern: finpy/entry/list
                         url(r'^entry/list/$', views.list_entry, name='list_entry'),
 
-
                         # Delete an entry
                         # Pattern: finpy/entry/delete/id , where id is the number of entry id
                         url(r'^entry/delete/(?P<entry_id>\d+)$', views.delete_entry, name='delete_entry'),

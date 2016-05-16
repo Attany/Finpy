@@ -230,6 +230,7 @@ class UpdateEntryView(View, FormContextMixin):
 
     @method_decorator(login_required)
     def post(self, request, entry_id=None):
+
         try:
             entry = self.check_entry_user(request, entry_id)
             form = self.form(data=request.POST, instance=entry)
@@ -245,7 +246,7 @@ class UpdateEntryView(View, FormContextMixin):
         return response
 
     def check_entry_user(self, request, entry_id):
-        """ Check if the current user is the update profile request user"""
+        """ Check if the current user is the update entry request user"""
 
         if entry_id is not None:
             entry = Entry.objects.get(pk=int(entry_id))

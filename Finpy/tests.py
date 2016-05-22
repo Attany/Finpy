@@ -1,11 +1,11 @@
 from django.test import TestCase
-from Finpy.models import InvestmentSimulation, SimulationAbstractStrategy, Entry, Category
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.utils.translation import ugettext as _
-from Finpy.models import UserProfile
 from django.core.urlresolvers import reverse
+from Finpy.models import UserProfile
+from Finpy.models import InvestmentSimulation, SimulationAbstractStrategy, Entry, Category
 
 # Create your tests here.
 
@@ -60,6 +60,40 @@ class FinpyViewsTestCase(TestCase):
 
         response_signup = self.client.get('/finpy/signup/')
         self.assertEqual(response_signup.status_code, 200)
+
+    def test_signup_get_view(self):
+        """ Test if the signup view respond correctly when using GET method """
+
+        url_to_test = reverse('signup')
+
+        response = self.client.get(url_to_test, follow=True)
+        self.assertEqual(response.status_code, self.RESPONSE_OK)
+
+        # Check if the register button is present
+        self.assertIn(_('Signup'), str(response.content))
+    
+    def test_signup_post_view(self):
+        """ Test if the signup view respond correctly when using POST method """
+
+        url_to_test = reverse('signup')
+
+        post_data = {
+            'username': "testuser",
+            'first_name': "Test User",
+            'last_name': "LastName",
+            'email': "testuser@mail.com",
+            'password1': "testuser",
+            'password2': "testuser",
+        }
+
+        response = self.client.post(url_to_test, post_data, follow=True)
+        self.assertEqual(response.status_code, self.RESPONSE_OK)
+
+        # Check if the user was registered
+        user = User.objects.get(username=post_data['username'])
+        self.assertEqual(user.username, post_data['username'])
+        self.assertEqual(user.first_name, post_data['first_name'])
+        self.assertEqual(user.email, post_data['email'])
 
     def test_entry_list(self):
 

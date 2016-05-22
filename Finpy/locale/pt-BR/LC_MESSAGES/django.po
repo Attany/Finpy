@@ -362,4 +362,4 @@ msgstr ""
 
 #: views.py:179
 msgid "User Registration"
-msgstr ""
+msgstr "Cadastro de usuário"

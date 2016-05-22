@@ -57,17 +57,7 @@ class FinpyViewsTestCase(TestCase):
         """
 
         response_login = self.client.get('/finpy/login/')
-        self.assertEqual(response_login.status_code, 200)
-
-    def test_signup(self):
-
-        """Método que realiza um assert para verificar
-        a conformidade entre requisição da página de cadastro 
-        e obtenção da mesma.
-        """
-
-        response_signup = self.client.get('/finpy/signup/')
-        self.assertEqual(response_signup.status_code, 200)
+        self.assertEqual(response_login.status_code, self.RESPONSE_OK)
 
     def test_signup_get_view(self):
         """ Test if the signup view respond correctly when using GET method """
@@ -103,15 +93,33 @@ class FinpyViewsTestCase(TestCase):
         self.assertEqual(user.first_name, post_data['first_name'])
         self.assertEqual(user.email, post_data['email'])
 
+    def test_about_page(self):
+
+        """ Test the about view """
+
+        response_entry_list = self.client.get(reverse('about'))
+        self.assertEqual(response_entry_list.status_code, self.RESPONSE_OK)
+
+    def test_service_page(self):
+
+        """ Test the service descriptions view """
+
+        response_entry_list = self.client.get(reverse('services_description'))
+        self.assertEqual(response_entry_list.status_code, self.RESPONSE_OK)
+
+    def test_simulation_list(self):
+
+        """ Test the simulation list view """
+
+        response_entry_list = self.client.get(reverse('list_simulations'))
+        self.assertEqual(response_entry_list.status_code, self.RESPONSE_PAGE_FOUND)
+    
     def test_entry_list(self):
 
-        """Método que realiza um assert para verificar
-        a conformidade entre requisição da página de listagem 
-        de receitas e despesas lançadas e a obtenção da mesma.
-        """
+        """ Test the list entry view """
 
-        response_entry_list = self.client.get('/finpy/entry/list/')
-        self.assertEqual(response_entry_list.status_code, 302)      
+        response_entry_list = self.client.get(reverse('list_entry'))
+        self.assertEqual(response_entry_list.status_code, self.RESPONSE_PAGE_FOUND)     
 
     def test_update_profile_get_view(self):
         """ Test if the profile view respond correctly when using GET method """

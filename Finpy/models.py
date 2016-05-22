@@ -171,16 +171,12 @@ class InvestmentSimulation(models.Model):
     # Identify items Enum
     PRESENT_VALUE = _('Present Value')
     FUTURE_VALUE = _('Future Value')
-    PAYMENT_VALUE = _('Payment Value')
-    RATE_VALUE = _('Rate Value')
     PERIOD_VALUE = _('Period Value')
 
     # Identify the type of result Enum
     RESULT_TO_DISCOVER = (
     (PRESENT_VALUE, _('Valor Presente')),
     (FUTURE_VALUE, _('Valor Futuro')),
-    (PAYMENT_VALUE, _('Valor do Pagamento')),
-    (RATE_VALUE, _('Valor da Taxa')),
     (PERIOD_VALUE, _('Valor do Período')),
     )
 

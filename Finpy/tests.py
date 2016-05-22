@@ -41,6 +41,14 @@ class FinpyViewsTestCase(TestCase):
                                            entry_quota_amount="10", entry_type=_('Income'),
                                            category=self.category, entry_user=user1)
 
+        self.user2_entry = Entry.objects.create(entry_source="Test Source 2", entry_value="100002",
+                                           entry_due_date="2019-05-29",
+                                           entry_periodicity=_('Monthly'),
+                                           entry_registration_date="2019-05-20",
+                                           entry_description="Test user 2 entry description",
+                                           entry_quota_amount="5", entry_type=_('Income'),
+                                           category=self.category, entry_user=user2)
+
     def test_login(self):
 
         """Método que realiza um assert para verificar
@@ -285,6 +293,38 @@ class FinpyViewsTestCase(TestCase):
         self.assertEqual(post_data['entry_source'], entry.entry_source)
         self.assertEqual(post_data['entry_description'], entry.entry_description)
 
+    def test_update_another_person_entry_get_view(self):
+        """ Test if the update entry view respond correctly when trying to access 
+            another person entry using GET method """
+
+        # Logging in with user 1
+        logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+
+        # Trying to access user2 entry
+        url_to_test = reverse('update_entry', kwargs={'entry_id': self.user2_entry.id})
+
+        response = self.client.get(url_to_test, follow=True)
+        self.assertEqual(response.status_code, self.RESPONSE_OK)
+
+        expected_message = _("This isn't your profile")
+        self.assertIn(expected_message, str(response.content, 'utf-8'))
+
+    def test_update_another_person_entry_post_view(self):
+        """ Test if the update entry view respond correctly when trying to access 
+            another person entry using POST method """
+
+        # Logging in with user 1
+        logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+
+        # Trying to access user2 entry
+        url_to_test = reverse('update_entry', kwargs={'entry_id': self.user2_entry.id})
+
+        # Test if the post was successfully done
+        response = self.client.post(url_to_test, follow=True)
+        self.assertEqual(response.status_code, self.RESPONSE_OK)
+
+        expected_message = _("This isn't your profile")
+        self.assertIn(expected_message, str(response.content, 'utf-8'))
 
 class FinpyModelsTestCase(TestCase):
 

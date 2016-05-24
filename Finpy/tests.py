@@ -49,195 +49,218 @@ class FinpyViewsTestCase(TestCase):
                                            entry_quota_amount="5", entry_type=_('Income'),
                                            category=self.category, entry_user=user2)
 
-    # def test_login(self):
+        self.entry_with_all_fields =  {
+            'entry_source': "Test Source Updated",
+            'entry_value': "10000",
+            'entry_due_date': "2019-03-29", 
+            'entry_periodicity': _('Monthly'), 
+            'entry_registration_date': "2019-03-20",
+            'entry_description': "Test user 1 entry description updated",
+            'entry_quota_amount': "5",
+            'entry_type': _('Income'),
+            'category': self.category.id,
+        }
 
-    #     """Método que realiza um assert para verificar
-    #     a conformidade entre requisição da página de login
-    #     e obtenção da mesma.
-    #     """
+        self.blank_entry_data =  {
+            'entry_value': "",
+            'entry_due_date': "", 
+            'entry_periodicity': "", 
+            'entry_registration_date': "",
+            'entry_quota_amount': "",
+            'entry_type': "",
+            'category': "",            
+        }
+        
 
-    #     response_login = self.client.get('/finpy/login/')
-    #     self.assertEqual(response_login.status_code, self.RESPONSE_OK)
+    def test_login(self):
 
-    # def test_signup_get_view(self):
-    #     """ Test if the signup view respond correctly when using GET method """
+        """Método que realiza um assert para verificar
+        a conformidade entre requisição da página de login
+        e obtenção da mesma.
+        """
 
-    #     url_to_test = reverse('signup')
+        response_login = self.client.get('/finpy/login/')
+        self.assertEqual(response_login.status_code, self.RESPONSE_OK)
 
-    #     response = self.client.get(url_to_test, follow=True)
-    #     self.assertEqual(response.status_code, self.RESPONSE_OK)
+    def test_signup_get_view(self):
+        """ Test if the signup view respond correctly when using GET method """
 
-    #     # Check if the register button is present
-    #     self.assertIn(_('Signup'), str(response.content))
+        url_to_test = reverse('signup')
+
+        response = self.client.get(url_to_test, follow=True)
+        self.assertEqual(response.status_code, self.RESPONSE_OK)
+
+        # Check if the register button is present
+        self.assertIn(_('Signup'), str(response.content))
     
-    # def test_signup_post_view(self):
-    #     """ Test if the signup view respond correctly when using POST method """
+    def test_signup_post_view(self):
+        """ Test if the signup view respond correctly when using POST method """
 
-    #     url_to_test = reverse('signup')
+        url_to_test = reverse('signup')
 
-    #     post_data = {
-    #         'username': "testuser",
-    #         'first_name': "Test User",
-    #         'last_name': "LastName",
-    #         'email': "testuser@mail.com",
-    #         'password1': "testuser",
-    #         'password2': "testuser",
-    #     }
+        post_data = {
+            'username': "testuser",
+            'first_name': "Test User",
+            'last_name': "LastName",
+            'email': "testuser@mail.com",
+            'password1': "testuser",
+            'password2': "testuser",
+        }
 
-    #     response = self.client.post(url_to_test, post_data, follow=True)
-    #     self.assertEqual(response.status_code, self.RESPONSE_OK)
+        response = self.client.post(url_to_test, post_data, follow=True)
+        self.assertEqual(response.status_code, self.RESPONSE_OK)
 
-    #     # Check if the user was registered
-    #     user = User.objects.get(username=post_data['username'])
-    #     self.assertEqual(user.username, post_data['username'])
-    #     self.assertEqual(user.first_name, post_data['first_name'])
-    #     self.assertEqual(user.email, post_data['email'])
+        # Check if the user was registered
+        user = User.objects.get(username=post_data['username'])
+        self.assertEqual(user.username, post_data['username'])
+        self.assertEqual(user.first_name, post_data['first_name'])
+        self.assertEqual(user.email, post_data['email'])
 
-    # def test_about_page(self):
+    def test_about_page(self):
 
-    #     """ Test the about view """
+        """ Test the about view """
 
-    #     response_entry_list = self.client.get(reverse('about'))
-    #     self.assertEqual(response_entry_list.status_code, self.RESPONSE_OK)
+        response_entry_list = self.client.get(reverse('about'))
+        self.assertEqual(response_entry_list.status_code, self.RESPONSE_OK)
 
-    # def test_service_page(self):
+    def test_service_page(self):
 
-    #     """ Test the service descriptions view """
+        """ Test the service descriptions view """
 
-    #     response_entry_list = self.client.get(reverse('services_description'))
-    #     self.assertEqual(response_entry_list.status_code, self.RESPONSE_OK)
+        response_entry_list = self.client.get(reverse('services_description'))
+        self.assertEqual(response_entry_list.status_code, self.RESPONSE_OK)
 
-    # def test_simulation_list(self):
+    def test_simulation_list(self):
 
-    #     """ Test the simulation list view """
+        """ Test the simulation list view """
 
-    #     response_entry_list = self.client.get(reverse('list_simulations'))
-    #     self.assertEqual(response_entry_list.status_code, self.RESPONSE_PAGE_FOUND)
+        response_entry_list = self.client.get(reverse('list_simulations'))
+        self.assertEqual(response_entry_list.status_code, self.RESPONSE_PAGE_FOUND)
     
-    # def test_entry_list(self):
+    def test_entry_list(self):
 
-    #     """ Test the list entry view """
+        """ Test the list entry view """
 
-    #     response_entry_list = self.client.get(reverse('list_entry'))
-    #     self.assertEqual(response_entry_list.status_code, self.RESPONSE_PAGE_FOUND)     
+        response_entry_list = self.client.get(reverse('list_entry'))
+        self.assertEqual(response_entry_list.status_code, self.RESPONSE_PAGE_FOUND)     
 
-    # def test_update_profile_get_view(self):
-    #     """ Test if the profile view respond correctly when using GET method """
+    def test_update_profile_get_view(self):
+        """ Test if the profile view respond correctly when using GET method """
 
-    #     # Logging in with user 1
-    #     logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+        # Logging in with user 1
+        logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
 
-    #     url_to_test = reverse('update_profile', kwargs={'profile_id': self.user_profile.user.id})
+        url_to_test = reverse('update_profile', kwargs={'profile_id': self.user_profile.user.id})
 
-    #     update_profile_response = self.client.get(url_to_test, follow=True)
-    #     self.assertEqual(update_profile_response.status_code, self.RESPONSE_OK)
+        update_profile_response = self.client.get(url_to_test, follow=True)
+        self.assertEqual(update_profile_response.status_code, self.RESPONSE_OK)
 
-    #     # If the CPF of the logged user appears on the page, the request was sucessfully done
-    #     self.assertIn(self.user_profile.cpf, str(update_profile_response.content))
+        # If the CPF of the logged user appears on the page, the request was sucessfully done
+        self.assertIn(self.user_profile.cpf, str(update_profile_response.content))
     
-    # def test_update_another_person_profile_get_view(self):
-    #     """ Test if the profile view respond correctly when trying to access 
-    #         another person profile using GET method """
+    def test_update_another_person_profile_get_view(self):
+        """ Test if the profile view respond correctly when trying to access 
+            another person profile using GET method """
 
-    #     # Logging in with user 1
-    #     logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+        # Logging in with user 1
+        logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
 
-    #     # Trying to access the update profile page of user 2
-    #     url_to_test = reverse('update_profile', kwargs={'profile_id': self.user_profile2.user.id})
+        # Trying to access the update profile page of user 2
+        url_to_test = reverse('update_profile', kwargs={'profile_id': self.user_profile2.user.id})
 
-    #     update_profile_response = self.client.get(url_to_test, follow=True)
-    #     self.assertEqual(update_profile_response.status_code, self.RESPONSE_OK)
+        update_profile_response = self.client.get(url_to_test, follow=True)
+        self.assertEqual(update_profile_response.status_code, self.RESPONSE_OK)
 
-    #     # If this text appear on the response page, the system 
-    #     #  did not let the user update another profile
-    #     expected_message = _("This isn't your profile")
-    #     self.assertIn(expected_message, str(update_profile_response.content, 'utf-8'))
+        # If this text appear on the response page, the system 
+        #  did not let the user update another profile
+        expected_message = _("This isn't your profile")
+        self.assertIn(expected_message, str(update_profile_response.content, 'utf-8'))
 
-    # def test_update_profile_post_view(self):
-    #     """ Test if the profile view respond correctly when using POST method """
+    def test_update_profile_post_view(self):
+        """ Test if the profile view respond correctly when using POST method """
 
-    #     # Logging in with user 1
-    #     logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+        # Logging in with user 1
+        logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
 
-    #     url_to_test = reverse('update_profile', kwargs={'profile_id': self.user_profile.user.id})
+        url_to_test = reverse('update_profile', kwargs={'profile_id': self.user_profile.user.id})
 
-    #     # Trying to update the user CPF to 98745678345
-    #     new_cpf = "98745678345"
-    #     post_data = {
-    #         'profile_id': self.user_profile.user.id,
-    #         'cpf': new_cpf
-    #     }
+        # Trying to update the user CPF to 98745678345
+        new_cpf = "98745678345"
+        post_data = {
+            'profile_id': self.user_profile.user.id,
+            'cpf': new_cpf
+        }
 
-    #     update_profile_response = self.client.post(url_to_test, post_data, follow=True)
-    #     self.assertEqual(update_profile_response.status_code, self.RESPONSE_OK)
+        update_profile_response = self.client.post(url_to_test, post_data, follow=True)
+        self.assertEqual(update_profile_response.status_code, self.RESPONSE_OK)
 
-    #     # If the new CPF appears on the page, the request was sucessfully done
-    #     self.assertIn(new_cpf, str(update_profile_response.content))
+        # If the new CPF appears on the page, the request was sucessfully done
+        self.assertIn(new_cpf, str(update_profile_response.content))
 
-    # def test_update_another_person_profile_post_view(self):
-    #     """ Test if the profile view respond correctly when trying to access 
-    #         another person profile using POST method """
+    def test_update_another_person_profile_post_view(self):
+        """ Test if the profile view respond correctly when trying to access 
+            another person profile using POST method """
 
-    #     # Logging in with user 1
-    #     logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+        # Logging in with user 1
+        logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
 
-    #     # Try to access the update profile page of user 2
-    #     url_to_test = reverse('update_profile', kwargs={'profile_id': self.user_profile2.user.id})
+        # Try to access the update profile page of user 2
+        url_to_test = reverse('update_profile', kwargs={'profile_id': self.user_profile2.user.id})
 
-    #     # Trying to update the user CPF to 98745678345
-    #     new_cpf = "98745678345"
-    #     post_data = {
-    #         'profile_id': self.user_profile.user.id,
-    #         'cpf': new_cpf
-    #     }
+        # Trying to update the user CPF to 98745678345
+        new_cpf = "98745678345"
+        post_data = {
+            'profile_id': self.user_profile.user.id,
+            'cpf': new_cpf
+        }
 
-    #     update_profile_response = self.client.post(url_to_test, post_data, follow=True)
-    #     self.assertEqual(update_profile_response.status_code, self.RESPONSE_OK)
+        update_profile_response = self.client.post(url_to_test, post_data, follow=True)
+        self.assertEqual(update_profile_response.status_code, self.RESPONSE_OK)
 
-    #     # If this text appear on the response page, the system 
-    #     #  did not let the user update another profile
-    #     expected_message = _("This isn't your profile")
-    #     self.assertIn(expected_message, str(update_profile_response.content, 'utf-8'))
+        # If this text appear on the response page, the system 
+        #  did not let the user update another profile
+        expected_message = _("This isn't your profile")
+        self.assertIn(expected_message, str(update_profile_response.content, 'utf-8'))
 
-    # def test_simulate_investment_get_view(self):
-    #     """ Test if the simulate investment view respond correctly when using GET method """
+    def test_simulate_investment_get_view(self):
+        """ Test if the simulate investment view respond correctly when using GET method """
 
-    #     # Logging in with user 1
-    #     logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+        # Logging in with user 1
+        logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
 
-    #     url_to_test = reverse('simulate_investment')
+        url_to_test = reverse('simulate_investment')
 
-    #     response = self.client.get(url_to_test, follow=True)
-    #     self.assertEqual(response.status_code, self.RESPONSE_OK)
+        response = self.client.get(url_to_test, follow=True)
+        self.assertEqual(response.status_code, self.RESPONSE_OK)
 
-    # def test_simulate_investment_post_view(self):
-    #     """ Test if the simulate investment view respond correctly when using POST method """
+    def test_simulate_investment_post_view(self):
+        """ Test if the simulate investment view respond correctly when using POST method """
 
-    #     # Logging in with user 1
-    #     logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+        # Logging in with user 1
+        logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
 
-    #     url_to_test = reverse('simulate_investment')
+        url_to_test = reverse('simulate_investment')
 
-    #     # An arbitrary present value
-    #     present_value = "9857484"
-    #     post_data = {
-    #         'present_value': present_value
-    #     }
+        # An arbitrary present value
+        present_value = "9857484"
+        post_data = {
+            'present_value': present_value
+        }
 
-    #     response = self.client.post(url_to_test, post_data, follow=True)
-    #     self.assertEqual(response.status_code, self.RESPONSE_OK)
-    #     self.assertIn(present_value, str(response.content))
+        response = self.client.post(url_to_test, post_data, follow=True)
+        self.assertEqual(response.status_code, self.RESPONSE_OK)
+        self.assertIn(present_value, str(response.content))
 
-    # def test_create_entry_get_view(self):
-    #     """ Test if the create entry view respond correctly when using GET method """
+    def test_create_entry_get_view(self):
+        """ Test if the create entry view respond correctly when using GET method """
 
-    #     # Logging in with user 1
-    #     logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+        # Logging in with user 1
+        logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
 
-    #     url_to_test = reverse('create_entry')
+        url_to_test = reverse('create_entry')
 
-    #     response = self.client.get(url_to_test, follow=True)
-    #     self.assertEqual(response.status_code, self.RESPONSE_OK)
+        response = self.client.get(url_to_test, follow=True)
+        self.assertEqual(response.status_code, self.RESPONSE_OK)
 
     def entry_test(self, post_data):
         # Logging in with user 1
@@ -247,99 +270,60 @@ class FinpyViewsTestCase(TestCase):
         response = self.client.post(url_to_test, post_data, follow=True)
         return response 
     
-    # def test_create_entry_post_view(self):
-    #     """ Test if the create view respond correctly when using POST method with all fields"""
+    def test_create_entry_post_view(self):
+        """ Test if the create view respond correctly when using POST method with all fields"""
 
-    #     # An arbitrary entry value
-    #     entry_value = "10000.00"
-    #     post_data = {
-    #         'entry_source': "Test Source Updated",
-    #         'entry_value': entry_value,
-    #         'entry_due_date': "2019-03-29", 
-    #         'entry_periodicity': _('Monthly'), 
-    #         'entry_registration_date': "2019-03-20",
-    #         'entry_description': "Test user 1 entry description updated",
-    #         'entry_quota_amount': "5",
-    #         'entry_type': _('Income'),
-    #         'category': self.category.id,
-    #     }
+        expected_form_result = "has-success"
+        response = self.entry_test(self.entry_with_all_fields)
 
-    #     expected_form_result = "has-success"
-    #     response = self.entry_test(post_data)
+        self.assertContains(response, expected_form_result, status_code=200)
 
-    #     self.assertContains(response, expected_form_result, status_code=200)
+    def test_create_entry_only_with_required_values(self):
+        """ Test if the create view respond correctly when using POST method with only required fields"""
 
-    # def test_create_entry_only_with_required_values(self):
-    #     """ Test if the create view respond correctly when using POST method with only required fields"""
+        expected_form_result = "has-success"
+        expected_result = self.entry_with_all_fields['entry_value']
+        self.entry_with_all_fields['entry_source'] = ""
+        self.entry_with_all_fields['entry_description'] = ""
 
-    #     # An arbitrary entry value
-    #     entry_value = "10000.00"
-    #     post_data = {
-    #         'entry_value': entry_value,
-    #         'entry_due_date': "2019-03-29", 
-    #         'entry_periodicity': _('Monthly'), 
-    #         'entry_registration_date': "2019-03-20",
-    #         'entry_quota_amount': "5",
-    #         'entry_type': _('Income'),
-    #         'category': self.category.id,
-    #     }
+        response = self.entry_test(self.entry_with_all_fields)
+        self.assertContains(response, expected_form_result, status_code=200)
+        self.assertContains(response, expected_result, status_code=200)
+        self.assertNotContains(response, "has-error", status_code=200)
 
-    #     expected_form_result = "has-success"
-    #     expected_result = entry_value
-        
-    #     response = self.entry_test(post_data)
-    #     self.assertContains(response, expected_form_result, status_code=200)
-    #     self.assertContains(response, entry_value, status_code=200)
-    #     self.assertNotContains(response, "has-error", status_code=200)
+    def test_create_entry_without_all_fields(self):
+        """ Test if the create view show an error when using POST method without all required fields"""
 
-    # def test_create_entry_without_all_fields(self):
-    #     """ Test if the create view show an error when using POST method without all required fields"""
-
-    #     # An arbitrary entry value
-    #     post_data = {
-    #         'entry_value': "10000.00",
-    #         'entry_registration_date': "2019-03-20",
-    #         'entry_quota_amount': "5",
-    #         'entry_type': _('Income'),
-    #     }
-
-    #     expected_form_result = "has-error"
-        
-    #     response = self.entry_test(post_data)
-    #     self.assertContains(response, expected_form_result, status_code=200)
-
-    def test_create_entry_with_blank_fields(self):
-        """ Test if the create view show an error when using POST method with blank required fields"""
-
-        # An arbitrary entry value
-        post_data = {
-            'entry_value': "",
-            'entry_due_date': "", 
-            'entry_periodicity': "", 
-            'entry_registration_date': "",
-            'entry_quota_amount': "",
-            'entry_type': "",
-            'category': "",            
-        }
+        post_data = {}
+        post_data['entry_value'] = self.entry_with_all_fields['entry_value']
+        post_data['entry_due_date'] = self.entry_with_all_fields['entry_due_date']
 
         expected_form_result = "has-error"
         
         response = self.entry_test(post_data)
         self.assertContains(response, expected_form_result, status_code=200)
 
-    # def test_update_entry_get_view(self):
-    #     """ Test if the update entry view respond correctly when using GET method """
+    def test_create_entry_with_blank_fields(self):
+        """ Test if the create view show an error when using POST method with blank required fields"""
 
-    #     # Logging in with user 1
-    #     logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+        expected_form_result = "has-error"
+        
+        response = self.entry_test(self.blank_entry_data)
+        self.assertContains(response, expected_form_result, status_code=200)
 
-    #     url_to_test = reverse('update_entry', kwargs={'entry_id': self.user1_entry.id})
+    def test_update_entry_get_view(self):
+        """ Test if the update entry view respond correctly when using GET method """
 
-    #     response = self.client.get(url_to_test, follow=True)
-    #     self.assertEqual(response.status_code, self.RESPONSE_OK)
-    #     self.assertIn(self.user1_entry.entry_source, str(response.content))
-    #     self.assertIn(self.user1_entry.entry_value, str(response.content))
-    #     self.assertIn(self.user1_entry.entry_description, str(response.content))
+        # Logging in with user 1
+        logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+
+        url_to_test = reverse('update_entry', kwargs={'entry_id': self.user1_entry.id})
+
+        response = self.client.get(url_to_test, follow=True)
+        self.assertEqual(response.status_code, self.RESPONSE_OK)
+        self.assertIn(self.user1_entry.entry_source, str(response.content))
+        self.assertIn(self.user1_entry.entry_value, str(response.content))
+        self.assertIn(self.user1_entry.entry_description, str(response.content))
 
     def test_update_entry_post_view(self):
         """ Test if the update entry view respond correctly when using POST1 method """
@@ -349,17 +333,7 @@ class FinpyViewsTestCase(TestCase):
 
         url_to_test = reverse('update_entry', kwargs={'entry_id': self.user1_entry.id})
 
-        post_data = {
-            'entry_source': "Test Source Updated",
-            'entry_value': "10000.00",
-            'entry_due_date': "2019-03-29", 
-            'entry_periodicity': _('Monthly'), 
-            'entry_registration_date': "2019-03-20",
-            'entry_description': "Test user 1 entry description updated",
-            'entry_quota_amount': "5",
-            'entry_type': _('Income'),
-            'category': self.category.id,
-        }
+        post_data = self.entry_with_all_fields
 
         # Test if the post was successfully done
         response = self.client.post(url_to_test, post_data, follow=True)
@@ -370,6 +344,35 @@ class FinpyViewsTestCase(TestCase):
         entry = Entry.objects.get(pk=int(self.user1_entry.id))
         self.assertEqual(post_data['entry_source'], entry.entry_source)
         self.assertEqual(post_data['entry_description'], entry.entry_description)
+
+
+    def test_update_entry_with_blank_fields(self):
+        """ Test if the update entry view show an error POST1 method with blank fields"""
+
+        # Logging in with user 1
+        logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+
+        url_to_test = reverse('update_entry', kwargs={'entry_id': self.user1_entry.id})
+
+        post_data = self.blank_entry_data
+        response = self.client.post(url_to_test, post_data, follow=True)
+        self.assertContains(response, "has-error", status_code=200)
+
+    def test_update_entry_without_required_fields(self):
+        """ Test if the update entry view show an error POST1 method without required fields"""
+
+        # Logging in with user 1
+        logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+
+        url_to_test = reverse('update_entry', kwargs={'entry_id': self.user1_entry.id})
+
+        post_data = {}
+        post_data['entry_value'] = self.entry_with_all_fields['entry_value']
+        post_data['entry_due_date'] = self.entry_with_all_fields['entry_due_date']
+        
+        response = self.client.post(url_to_test, post_data, follow=True)
+        self.assertContains(response, "has-error", status_code=200)
+
 
     def test_update_another_person_entry_get_view(self):
         """ Test if the update entry view respond correctly when trying to access 
@@ -404,53 +407,53 @@ class FinpyViewsTestCase(TestCase):
         expected_message = _("This isn't your profile")
         self.assertIn(expected_message, str(response.content, 'utf-8'))
 
-# class FinpyModelsTestCase(TestCase):
+class FinpyModelsTestCase(TestCase):
 
-#     """ Class to test models classes """
+    """ Class to test models classes """
 
-#     def setUp(self):
+    def setUp(self):
 
-#         """ Method to create a investment simulation """
-#         id_simulation = 1
-#         present_value = 1000
-#         future_value = 10000
-#         payment_value = 100
-#         rate_value = 0.5
-#         period_value = 1
-#         simulation_type = InvestmentSimulation.FINANCIAL_MATH
-#         result_to_discover = InvestmentSimulation.FUTURE_VALUE
+        """ Method to create a investment simulation """
+        id_simulation = 1
+        present_value = 1000
+        future_value = 10000
+        payment_value = 100
+        rate_value = 0.5
+        period_value = 1
+        simulation_type = InvestmentSimulation.FINANCIAL_MATH
+        result_to_discover = InvestmentSimulation.FUTURE_VALUE
 
-#         self.investmentSimulation = InvestmentSimulation(id_simulation, present_value, future_value, payment_value,
-#                                                         rate_value, period_value, simulation_type, result_to_discover)
+        self.investmentSimulation = InvestmentSimulation(id_simulation, present_value, future_value, payment_value,
+                                                        rate_value, period_value, simulation_type, result_to_discover)
 
 
-#     def test_calculate_investment_financial_future(self):
+    def test_calculate_investment_financial_future(self):
 
-#         """ Test the method that calculates an investment that has the Financial Math 
-#             type and the result is the Future Value"""
+        """ Test the method that calculates an investment that has the Financial Math 
+            type and the result is the Future Value"""
         
-#         simulation_result = self.investmentSimulation.calculate_investment()
-#         expected_result = [1000]
-#         self.assertEqual(simulation_result, expected_result)
+        simulation_result = self.investmentSimulation.calculate_investment()
+        expected_result = [1000]
+        self.assertEqual(simulation_result, expected_result)
 
 
-#     def test_calculate_invesment_financial_present(self):
+    def test_calculate_invesment_financial_present(self):
 
-#         """ Test the method that calculates an investment that has the Financial Math 
-#             type and the result is the Present Value"""
+        """ Test the method that calculates an investment that has the Financial Math 
+            type and the result is the Present Value"""
         
-#         self.investmentSimulation.result_to_discover = InvestmentSimulation.PRESENT_VALUE
-#         simulation_result = self.investmentSimulation.calculate_investment()
-#         expected_result = [10000]
-#         self.assertEqual(simulation_result, expected_result)
+        self.investmentSimulation.result_to_discover = InvestmentSimulation.PRESENT_VALUE
+        simulation_result = self.investmentSimulation.calculate_investment()
+        expected_result = [10000]
+        self.assertEqual(simulation_result, expected_result)
 
-#     def test_calculate_invesment_return_period(self):
+    def test_calculate_invesment_return_period(self):
 
-#         """ Test the method that calculates an investment that has the Investment Return 
-#             type and the result is the Period Value"""
+        """ Test the method that calculates an investment that has the Investment Return 
+            type and the result is the Period Value"""
         
-#         self.investmentSimulation.simulation_type = InvestmentSimulation.INVESTMENT_RETURN
-#         self.investmentSimulation.result_to_discover = InvestmentSimulation.PERIOD_VALUE
-#         simulation_result = self.investmentSimulation.calculate_investment()
-#         expected_result = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-#         self.assertEqual(simulation_result, expected_result)
+        self.investmentSimulation.simulation_type = InvestmentSimulation.INVESTMENT_RETURN
+        self.investmentSimulation.result_to_discover = InvestmentSimulation.PERIOD_VALUE
+        simulation_result = self.investmentSimulation.calculate_investment()
+        expected_result = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+        self.assertEqual(simulation_result, expected_result)

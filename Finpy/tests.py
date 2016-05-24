@@ -407,6 +407,47 @@ class FinpyViewsTestCase(TestCase):
         expected_message = _("This isn't your profile")
         self.assertIn(expected_message, str(response.content, 'utf-8'))
 
+
+    def test_delete_entry_view(self):
+        """ Test if the update entry view respond correctly when trying to delete an entry """
+
+        # Logging in with user 1
+        logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+
+        url_to_test = reverse('delete_entry', kwargs={'entry_id': self.user1_entry.id})
+
+        response = self.client.post(url_to_test, follow=True)
+        self.assertEqual(response.status_code, self.RESPONSE_OK)
+
+        list_url = reverse('list_entry')
+        
+        # Test if redirects for entry list
+        self.assertRedirects(response, list_url)
+
+        # Test if deleted
+        entry_value = self.user2_entry.entry_value
+        response = self.client.get(list_url, follow=True)
+        self.assertNotContains(response, entry_value, status_code=200)
+        
+
+    def test_delete_another_person_entry_view(self):
+        """ Test if the update entry view respond correctly when trying to delete 
+            another person entry """
+
+        # Logging in with user 1
+        logged = self.client.login(username=self.user_profile.user.username, password=self.user1_password)
+
+        # Trying to access user2 entry
+        url_to_test = reverse('delete_entry', kwargs={'entry_id': self.user2_entry.id})
+
+        response = self.client.post(url_to_test, follow=True)
+        self.assertEqual(response.status_code, self.RESPONSE_OK)
+
+        # Test error message
+        expected_message = _("This isn't your profile")
+        self.assertContains(response, expected_message, status_code=200)
+
+
 class FinpyModelsTestCase(TestCase):
 
     """ Class to test models classes """

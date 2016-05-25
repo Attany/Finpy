@@ -6,9 +6,5 @@ env:
 python:
   - "3.4"
 
-before_script:
-  - python manage.py makemigrations
-  - python manage.py migrate
-
 script:
    - python3 manage.py test

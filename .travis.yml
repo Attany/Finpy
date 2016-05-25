@@ -4,7 +4,20 @@ env:
   - DJANGO_VERSION=1.7.7
 
 python:
-  - "3.4"
+    - "3.4"
+
+install:
+  - sudo apt-get install python3-pip
+  - sudo pip3 install Django == 1.7.7
+  - sudo apt-get install postgresql postgresql-contrib
+  - sudo apt-get install python3-psycopg2
+  - sudo pip3 install django-bootstrap3==6.2.2
+  - sudo pip3 install django-foundation
+  - sudo pip3 install django-zurb-foundation
+
+before_script:
+  - python manage.py makemigrations
+  - python manage.py migrate
 
 script:
-   - python3 manage.py test
+  - python3 manage.py test

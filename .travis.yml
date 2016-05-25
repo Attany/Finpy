@@ -7,7 +7,8 @@ python:
   - "3.4"
 
 install:
-  - sudo apt-get install python3-pip
+  - sudo apt-get install python3-setuptools
+  - sudo easy_install3 pip
   - sudo pip3 install Django == 1.7.7
   - sudo apt-get install postgresql postgresql-contrib
   - sudo apt-get install python3-psycopg2

@@ -18,6 +18,10 @@ befote_install:
 
 install:
   - pip3 install Django==$DJANGO_VERSION
+  - sudo apt-get install python3-psycopg2
+  - sudo pip3 install django-bootstrap3==6.2.2
+  - sudo pip3 install django-foundation
+  - sudo pip3 install django-zurb-foundation
 
 script:
   - python3 manage.py test

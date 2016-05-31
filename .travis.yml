@@ -23,8 +23,7 @@ install:
   - pip3 install django-foundation
   - pip3 install django-zurb-foundation
 
-script:
-  - python setup.py test
+script: nosetests
 
 after_sucess:
   - coverals

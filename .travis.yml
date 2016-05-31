@@ -3,7 +3,9 @@ language: python
 python:
   - "3.4"
 
-sudo: required
+sudo: 
+  - apt-get install python3-pip
+  - pip3 install Django==1.7.7
 
 script:
   - python3 manage.py test

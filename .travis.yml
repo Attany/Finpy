@@ -18,7 +18,7 @@ befote_install:
 
 install:
   - pip3 install Django==$DJANGO_VERSION
-  - sudo apt-get install postgresql postgresql-contrib
+  - apt-get install postgresql postgresql-contrib
   - sudo apt-get install python3-psycopg2
   - sudo pip3 install django-bootstrap3==6.2.2
   - sudo pip3 install django-foundation

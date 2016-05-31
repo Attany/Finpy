@@ -1,10 +1,13 @@
 language: python
 
-env:
-  - DJANGO_VERSION=1.7.7
-
 python:
-    - "3.4"
+  - "3.4"
+
+env:
+  - DJANGO_VERSION=1.7.7 MIGRATE='./manage.py migrate'
+
+script:
+  - python3 manage.py migrate
 
 install:
   - sudo apt-get install python3-pip
@@ -15,9 +18,8 @@ install:
   - sudo pip3 install django-foundation
   - sudo pip3 install django-zurb-foundation
 
-before_script:
-  - python manage.py makemigrations
-  - python manage.py migrate
-
 script:
   - python3 manage.py test
+
+after_sucess:
+  - coverals

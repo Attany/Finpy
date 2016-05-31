@@ -9,14 +9,21 @@ env:
 script:
   - python3 manage.py migrate
 
+befote_install:
+  - sudo apt-get -y install python3-pip python-dev
+  - sudo pip3 install -U setuptools
+  - sudo pip3 install -U vrtualenvwrapper
+  - python3 -V
+  - pip3 -V  
+
 install:
-  - apt-get -y install python3-pip python-dev
-  - pip3 install Django == 1.7.7
-  - apt-get install postgresql postgresql-contrib
-  - apt-get install python3-psycopg2
-  - pip3 install django-bootstrap3==6.2.2
-  - pip3 install django-foundation
-  - pip3 install django-zurb-foundation
+  - npm install
+  - sudo pip3 install Django == 1.7.7
+  - sudo apt-get install postgresql postgresql-contrib
+  - sudo apt-get install python3-psycopg2
+  - sudo pip3 install django-bootstrap3==6.2.2
+  - sudo pip3 install django-foundation
+  - sudo pip3 install django-zurb-foundation
 
 script:
   - python3 manage.py test

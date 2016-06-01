@@ -19,6 +19,7 @@ befote_install:
   - sudo pip3 install -U vrtualenvwrapper
   - python3 -V
   - pip3 -V  
+  - sudo apt-get build-dep python-psycopg2
 
 install:
   - pip3 install Django==$DJANGO_VERSION
@@ -26,6 +27,7 @@ install:
   - pip3 install django-bootstrap3==6.2.2
   - pip3 install django-foundation
   - pip3 install django-zurb-foundation
+  - pip install psycopg2 
 
 script: python3 manage.py test
 

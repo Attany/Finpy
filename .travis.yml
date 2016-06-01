@@ -9,7 +9,7 @@ env:
 script:
   - python3 manage.py migrate
 
-before_install:
+befote_install:
   - sudo apt-get -y install python3-pip python-dev
   - sudo pip3 install -U setuptools
   - sudo pip3 install -U vrtualenvwrapper

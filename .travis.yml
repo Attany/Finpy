@@ -22,9 +22,9 @@ befote_install:
   - pip3 install -U vrtualenvwrapper
   - python3 -V
   - pip3 -V
-  - apt-get build-dep python-psycopg2
   - psql -c 'CREATE USER -drlP kanjam WITH PASSWORD 'root';'
   - psql -c 'create database kanjam;' -U kanjam
+  - apt-get build-dep python-psycopg2
   
 install:
   - pip3 install Django==$DJANGO_VERSION

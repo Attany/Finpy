@@ -22,8 +22,8 @@ befote_install:
   - sudo apt-get build-dep python-psycopg2
   - sudo apt-get install postgresql postgresql-contrib
   - sudo -i -u postgres
-  - sudo -u postgres createuser kanjam
   - sudo -u postgres psql
+  - sudo -u postgres createuser kanjam
   - sudo -u postgres create database kanjam with owner kanjam
 
 install:

@@ -23,9 +23,7 @@ befote_install:
   - python3 -V
   - pip3 -V
   - apt-get build-dep python-psycopg2
-  - sudo -i -u postgres
-  - createuser -drlP kanjam
-  - psql
+  - psql -c 'CREATE USER -drlP kanjam;'
   - psql -c 'create database kanjam;' -U kanjam
 
 install:

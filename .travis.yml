@@ -16,13 +16,13 @@ env:
 script:
   - python3 manage.py migrate
 
-before_install:
-  - sudo apt-get -y install python3-pip python-dev
-  - sudo pip3 install -U setuptools
-  - sudo pip3 install -U vrtualenvwrapper
+befote_install:
+  - apt-get install python3-pip
+  - pip3 install -U setuptools
+  - pip3 install -U vrtualenvwrapper
   - python3 -V
   - pip3 -V
-  - sudo apt-get build-dep python-psycopg2
+  - apt-get build-dep python-psycopg2
   - sudo -i -u postgres
   - createuser -drlP kanjam
   - psql

@@ -21,9 +21,10 @@ befote_install:
   - sudo pip3 install -U setuptools
   - sudo pip3 install -U vrtualenvwrapper
   - python3 -V
-  - pip3 -V  
+  - pip3 -V
   - sudo apt-get build-dep python-psycopg2
-  - psql -c 'create database travis_ci_test;' -U postgres
+  - sudo -i -u postgres createuser kanjam
+  - psql -c 'create database travis_ci_test;' -U kanjam
 
 install:
   - pip3 install Django==$DJANGO_VERSION

@@ -20,7 +20,10 @@ befote_install:
   - python3 -V
   - pip3 -V  
   - sudo apt-get build-dep python-psycopg2
+  - sudo apt-get install postgresql postgresql-contrib
+  - sudo -i -u postgres
   - sudo -u postgres createuser kanjam
+  - create database kanjam with owner kanjam
 
 install:
   - pip3 install Django==$DJANGO_VERSION

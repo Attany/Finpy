@@ -23,9 +23,9 @@ befote_install:
   - python3 -V
   - pip3 -V
   - apt-get build-dep python-psycopg2
-  - psql -c 'CREATE USER -drlP kanjam;'
+  - psql -c 'CREATE USER -drlP kanjam WITH PASSWORD 'root';'
   - psql -c 'create database kanjam;' -U kanjam
-
+  
 install:
   - pip3 install Django==$DJANGO_VERSION
   - sudo apt-get install python3-psycopg2

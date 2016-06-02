@@ -7,6 +7,9 @@ branches:
   only:
     - travis
 
+services:
+  - postgresql
+
 env:
   - DJANGO_VERSION=1.7.7 MIGRATE='./manage.py migrate'
 
@@ -20,7 +23,7 @@ befote_install:
   - python3 -V
   - pip3 -V  
   - sudo apt-get build-dep python-psycopg2
-  - psql -c "CREATE USER kanjam;" -U postgres
+  - psql -c 'create database travis_ci_test;' -U postgres
 
 install:
   - pip3 install Django==$DJANGO_VERSION

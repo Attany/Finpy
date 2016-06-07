@@ -13,6 +13,10 @@ services:
 env:
   - DJANGO_VERSION=1.7.7 MIGRATE='./manage.py migrate'
 
+before_srcript:
+  - psql -c 'create database kanjam;' -U postgres
+  - psql -c 'CREATE USER -drlP kanjam WITH PASSWORD 'root';'
+
 script:
   - python3 manage.py migrate
 
@@ -29,9 +33,6 @@ install:
   - pip3 install django-bootstrap3==6.2.2
   - pip3 install django-foundation
   - pip3 install django-zurb-foundation
-  - psql -c create database kanjam;
-  - psql -U kanjam;
-  - psql -c 'CREATE USER -drlP kanjam WITH PASSWORD 'root';'
   - apt-get build-dep python-psycopg2
   - pip3 install psycopg2 
 

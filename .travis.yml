@@ -14,8 +14,9 @@ env:
   - DJANGO_VERSION=1.7.7 MIGRATE='./manage.py migrate'
 
 before_srcript:
-  - psql -c 'create user kanjam WITH PASSWORD 'root';'
-  - psql -c 'create database kanjam with owner kanjam;' -U postgres
+  - sudo -u -i postgres
+  - psql -c 'createuser -drlP kanjam;'
+  - psql -c 'create database kanjam with owner kanjam;'
 
 script:
   - python3 manage.py migrate
@@ -36,4 +37,5 @@ install:
   - sudo apt-get build-dep python-psycopg2
   - pip3 install psycopg2 
 
-script: python3 manage.py test
+script: 
+  - python3 manage.py test

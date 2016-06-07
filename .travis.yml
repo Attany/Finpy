@@ -14,8 +14,8 @@ env:
   - DJANGO_VERSION=1.7.7 MIGRATE='./manage.py migrate'
 
 before_srcript:
-  - psql -c 'create database kanjam;' -U postgres
   - psql -c 'create user kanjam WITH PASSWORD 'root';'
+  - psql -c 'create database kanjam with owner kanjam;' -U postgres
 
 script:
   - python3 manage.py migrate

@@ -33,7 +33,7 @@ install:
   - pip3 install django-bootstrap3==6.2.2
   - pip3 install django-foundation
   - pip3 install django-zurb-foundation
-  - apt-get build-dep python-psycopg2
+  - sudo apt-get build-dep python-psycopg2
   - pip3 install psycopg2 
 
 script: python3 manage.py test

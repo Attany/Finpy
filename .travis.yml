@@ -19,7 +19,7 @@ before_srcript:
   - psql -c 'create database kanjam with owner kanjam;'
 
 script:
-  - python3 manage.py migrate
+  - ./manage.py migrate
 
 befote_install:
   - apt-get install python3-pip

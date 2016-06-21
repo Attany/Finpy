@@ -15,7 +15,7 @@ env:
 
 before_srcript:
   - sudo -u -i postgres
-  - psql -c 'createuser -drlP kanjam;'
+  - sudo - u postgres createuser kanjam
   - psql -c 'create database kanjam with owner kanjam;'
 
 script:

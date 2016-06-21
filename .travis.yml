@@ -37,7 +37,6 @@ before_script:
   - sudo cp ./pg_hba.conf /etc/postgresql/9.3/main
   - sudo /etc/init.d/postgresql start
   - npm install -g bower
-  - cp .env_dev .env
   - sed -i -e 's/getpass.getuser()/"postgres"/g' kanjam/settings.py
   - psql -c 'create database kanjam;' -U postgres
 

@@ -21,8 +21,7 @@ install:
   - pip3 install --upgrade setuptools
 
 before_script:
-  - sudo -u -i postgres createuser kanjam
-  - psql -c create database kanjam with owner kanjam
+  - psql -c 'create database kanjam with owner kanjam;' -U postgres
 
 script:
-  - ./manage.py test
+  - phyton3 manage.py test

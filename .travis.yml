@@ -22,7 +22,7 @@ install:
 
 before_script:
   - psql -c 'create database kanjam;' -U postgres
-  - psql -c 'CREATE USER -drlP kanjam WITH PASSWORD 'root';' -U postgres
+  - psql -c 'CREATEUSER kanjam WITH PASSWORD 'root';' -U postgres
 
 script:
   - phyton3 manage.py test

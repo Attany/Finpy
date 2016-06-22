@@ -24,4 +24,4 @@ before_script:
   - psql -c 'create database kanjam;' -U postgres
 
 script:
-  - phyton3 manage.py test
+  - ./manage.py test

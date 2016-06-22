@@ -22,8 +22,7 @@ install:
 
 before_script:
   - psql -c 'create database kanjam;' -U postgres
-  - su - postgres -c 'createuser -s kanjam'
-  - su - postgres -c 'root'
+  - su - postgres -c 'createuser -s kanjam WITH PASSWORD 'root';'
 
 script:
   - ./manage.py test

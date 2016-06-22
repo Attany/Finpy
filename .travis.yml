@@ -2,7 +2,7 @@ language: python
 sudo: required
 
 python:
-  - "3.4.3"
+  - "3.4"
 
 services:
   - postgresql
@@ -21,8 +21,7 @@ install:
   - pip3 install --upgrade setuptools
 
 before_script:
-  - sudo -u -i postgres
-  - sudo - u postgres createuser kanjam
+  - sudo -u postgres createuser kanjam
   - psql -c 'create database kanjam with owner kanjam;'
 
 script:

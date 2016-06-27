@@ -13,5 +13,5 @@ install:
   - sudo pip install django-zurb-foundation
 
 before_script:
-  - python manage.py makemigrations
-  - python manage.py migrate
+  - python3 manage.py makemigrations
+  - python3 manage.py migrate

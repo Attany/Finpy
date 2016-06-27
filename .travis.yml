@@ -14,4 +14,4 @@ install:
   - sudo pip install django-zurb-foundation
 
 script:
-  - ./manage.py test
+  - python3 manage.py test

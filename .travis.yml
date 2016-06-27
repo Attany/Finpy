@@ -19,4 +19,4 @@ install:
   - pip3 install --upgrade setuptools
 
 script:
-  - python3 manage.py test
+  - ./manage.py test

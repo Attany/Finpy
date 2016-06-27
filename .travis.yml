@@ -10,7 +10,7 @@ install:
   - pip3 install Django==$DJANGO_VERSION
   - sudo apt-get install python3 python-pip
   - sudo apt-get install python-psycopg2
-  - sudo pip install django-bootstrap3
+  - sudo pip install django-bootstrap3==6.2.2
   - sudo pip install django-zurb-foundation
 
 script:

@@ -9,7 +9,7 @@ services:
 
 env:
   - DJANGO_VERSION=1.7.7 MIGRATE='./manage.py migrate'
-  - USER_PASSWORD = 'root'
+ 
 install:
   - pip3 install Django==$DJANGO_VERSION
   - sudo apt-get install python3-psycopg2
@@ -22,6 +22,7 @@ install:
 
 before_script:
   - psql -c 'create database kanjam;' -U postgres
+  - USER_PASSWORD = 'root'
   - su - postgres -c 'createuser -s kanjam WITH PASSWORD USER_PASSWORD'
 
 script:

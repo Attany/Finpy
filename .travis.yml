@@ -12,3 +12,6 @@ install:
   - sudo apt-get install python-psycopg2
   - sudo pip install django-bootstrap3
   - sudo pip install django-zurb-foundation
+
+script:
+  - ./manage.py test

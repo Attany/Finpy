@@ -1,4 +1,5 @@
 language: python
+sudo: required
 
 env:
   - DJANGO_VERSION=1.7.7 MIGRATE='./manage.py migrate'
@@ -8,10 +9,13 @@ python:
 
 install:
   - pip3 install Django==$DJANGO_VERSION
-  - sudo apt-get install python3 python-pip
-  - sudo apt-get install python-psycopg2
-  - sudo pip install django-bootstrap3==6.2.2
-  - sudo pip install django-zurb-foundation
+  - sudo apt-get install python3-psycopg2
+  - pip3 install django-bootstrap3==6.2.2
+  - pip3 install django-foundation
+  - pip3 install django-zurb-foundation
+  - sudo apt-get build-dep python-psycopg2
+  - pip3 install psycopg2 
+  - pip3 install --upgrade setuptools
 
 script:
-  - python3 manage.py test
+  - python3manage.py test

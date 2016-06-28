@@ -1,6 +1,14 @@
 language: python
 sudo: required
 
+services:
+  - postgresql
+
+postgresql:
+  username: kanjam
+  password: root
+  database: kanjam
+
 env:
   - DJANGO_VERSION=1.7.7 MIGRATE='./manage.py migrate'
 
@@ -9,7 +17,6 @@ python:
 
 install:
   - pip3 install Django==$DJANGO_VERSION
-  - pip3 install -t lib -r requirements.txt
   - sudo apt-get install python3-psycopg2
   - pip3 install django-bootstrap3==6.2.2
   - pip3 install django-foundation

@@ -1,0 +1,5 @@
+sudo apt-get install postgresql postgresql-contrib
+sudo -i -u postgres
+createuser -drlP kanjam
+psql
+create database kanjam with owner kanjam;

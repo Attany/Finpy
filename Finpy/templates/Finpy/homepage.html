@@ -56,10 +56,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="about.html">Sobre o Sistema</a>
+                        <a href="{% url 'about' %}">Sobre o Sistema</a>
                     </li>
                     <li>
-                        <a href="service.html">Serviços Oferecidos</a>
+                        <a href="{% url 'services_description' %}">Serviços Oferecidos</a>
                     </li>
                     <li>
                         <a href="{% url 'list_entry' %}"><b>Funcionalidades</b></a>
@@ -79,7 +79,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <br>
-                    <center><a href="homepage.html"><img src="../../static/images/logo.png"></a></center>
+                    <center><a href="{% url 'index'%}"><img src="../../static/images/logo.png"></a></center>
                 </div>
             </div>
         </div>
@@ -109,7 +109,7 @@
                 </p>
                
                 <p>
-                    <a class="btn btn-default btn-lg" href="about.html">Leia Mais &raquo;</a>
+                    <a class="btn btn-default btn-lg" href="{% url 'about' %}">Leia Mais &raquo;</a>
                 </p>
             </div>
 
@@ -137,11 +137,11 @@
 
         <div class="row featurette">
             <div class="col-md-7">
-                <a href="service.html"><h2 class="featurette-heading"> Registrar diversos Lançamentos</a>
+                <a href="{% url 'services_description' %}"><h2 class="featurette-heading"> Registrar diversos Lançamentos</a>
                 <p class="lead">A partir da interface detalhadamente desenhada é possível inserir, alterar e remover as suas receitas e despesas. Além disso, fica maais fácil manter o controle sobre essas informações quando é possível gerar um relatório detalhado sobre eles.</p>
             </div>
             <div class="col-md-5">
-                <a href="service.html"><img class="featurette-image img-circle img-responsive center-block" src="../../static/images/Propaganda01.jpg" alt="Generic placeholder image"></a>
+                <a href="{% url 'services_description' %}"><img class="featurette-image img-circle img-responsive center-block" src="../../static/images/Propaganda01.jpg" alt="Generic placeholder image"></a>
             </div>
         </div>
 
@@ -149,11 +149,11 @@
 
         <div class="row featurette">
             <div class="col-md-7 col-md-push-5">
-                <a href="service.html"><h2 class="featurette-heading">Visualizar Dicas Financeiras</a>
+                <a href="{% url 'services_description' %}"><h2 class="featurette-heading">Visualizar Dicas Financeiras</a>
                 <p class="lead">Sabe aquela pulga atras da orelha quanto a um investimento ou financiamento? Pois é, com o EqLibra esse problema será ligeiramente reduzido, pois este sistema conta com um mecânismo de dicas financeiras que permite o usuário conhecer muita mais sobre o universo financeiro.</p>
             </div>
             <div class="col-md-5 col-md-pull-7">
-                <a href="service.html"><img class="featurette-image img-circle img-responsive center-block" src="../../static/images/Propaganda03.jpg" alt="Generic placeholder image"></a>
+                <a href="{% url 'services_description' %}"><img class="featurette-image img-circle img-responsive center-block" src="../../static/images/Propaganda03.jpg" alt="Generic placeholder image"></a>
             </div>
         </div>
 
@@ -161,11 +161,11 @@
 
         <div class="row featurette">
             <div class="col-md-7">
-                <a href="service.html"><h2 class="featurette-heading"> Efetuar Simulações de Aquisição</a>
+                <a href="{% url 'services_description' %}"><h2 class="featurette-heading"> Efetuar Simulações de Aquisição</a>
                 <p class="lead">Você deseja realizar algumas aquisição em um determinado tempo? Não sabe como fazer isso? Pois então a solução para seus apareceu! O EqLibra conta com um sistema de simulação financeira no qual permite você calcular diversos invertimentos do seu modo, do seu gosto!</p>
             </div>
             <div class="col-md-5">
-                <a href="service.html"><img class="featurette-image img-circle img-responsive center-block" src="../../static/images/Propaganda02.jpg" alt="Generic placeholder image"></a>
+                <a href="{% url 'services_description' %}"><img class="featurette-image img-circle img-responsive center-block" src="../../static/images/Propaganda02.jpg" alt="Generic placeholder image"></a>
             </div>
         </div>
 

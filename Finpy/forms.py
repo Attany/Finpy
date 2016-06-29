@@ -3,11 +3,11 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 from django.contrib.auth.models import User
 from Finpy.models import UserProfile, Entry, InvestmentSimulation
 
+
 class UserCreationForm(forms.ModelForm):
-    
-    """Classe UserCreationForm. Classe que possui
-    os tratamentos inerentes à lógica dos formulários
-    existentes na página de criação de usuário.
+
+    """UserCreationForm Class. This class contains the treatments
+     of the existents forms on register user page
     """
 
     error_messages = {
@@ -21,15 +21,16 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
 
-        """Classe Meta. Classe que define as informações
-        que serão utilizadas com base no conjunto já existente
-        da Model User do framework Django.
+        """Meta Class. This class defines the informations
+        that will be used based on existent set from
+        User Model of the Django framework.
         """
 
         model = User
-        fields = ("username","first_name","last_name","email")
+        fields = ("username", "first_name", "last_name", "email")
 
     def clean_password2(self):
+        """ Used to clean the password """
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
@@ -40,6 +41,7 @@ class UserCreationForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
+        """ Used to save the user """
         user = super(UserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         if commit:
@@ -49,17 +51,15 @@ class UserCreationForm(forms.ModelForm):
 
 class InvestmentSimulationForm(forms.ModelForm):
 
-    """Classe InvestmentSimulationForm. Classe que possui
-    os tratamentos inerentes à lógica dos formulários
-    existentes na página de preenchimento de informações
-    para a simulação de investimento.
+    """InvestmentSimulationForm Class. This class contains the treatments
+     of the existents forms on investment simulation page.
     """
 
     class Meta:
 
-        """Classe Meta. Classe que define as informações
-        que serão utilizadas com base no conjunto existente
-        na Model InvestmentSimulation.
+        """Meta Class. This class defines the informations
+        that will be used based on existent set
+        from InvestmentSimulation Model.
         """
 
         model = InvestmentSimulation
@@ -68,17 +68,16 @@ class InvestmentSimulationForm(forms.ModelForm):
 
 class ProfileUpdateForm(forms.ModelForm):
 
-    """Classe ProfileUpdateForm. Classe que possui
-    os tratamentos inerentes à lógica dos formulários
-    existentes na página de atualização das informações
-    do usuário.
+    
+    """ProfileUpdateForm Class. TThis class contains the treatments
+     of the existents forms on update user information page.
     """
 
     class Meta:
 
-        """Classe Meta. Classe que define as informações
-        que serão utilizadas com base no conjunto já existente
-        da Model UserProfile.
+        """Meta Class. This class defines the informations
+        that will be used based on existent set
+        from UserProfile Model.
         """
 
         model = UserProfile
@@ -87,17 +86,14 @@ class ProfileUpdateForm(forms.ModelForm):
 
 class EntryForm(forms.ModelForm):
 
-    """Classe EntryForm. Classe que possui
-    os tratamentos inerentes à lógica dos formulários
-    existentes na página de inserção de lançamentos
-    de receitas e despesas.
+    """EntryForm Class. This class contains the treatments
+     of the existents forms on launches of revenues and expenses page.  
     """
 
     class Meta:
 
-        """Classe Meta. Classe que define as informações
-        que serão utilizadas com base no conjunto já existente
-        da Model Entry.
+        """Meta Class. This class defines the informations
+        that will be used based on existent set on Entry Model.
         """
 
         model = Entry
@@ -105,4 +101,5 @@ class EntryForm(forms.ModelForm):
         exclude = ['entry_user']
 
     def delete(self, instance=None):
+        """ Used to delete a entry """
         return instance.delete()

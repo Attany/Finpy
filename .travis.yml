@@ -1,17 +1,27 @@
 language: python
+sudo: required
+
+services:
+  - postgresql
 
 env:
-	- DJANGO=1.7
+  - DJANGO_VERSION=1.7.7 MIGRATE='./manage.py migrate'
 
 python:
-	- "3.3"
+  - "3.4"
 
 install:
-	- sudo apt-get install python3 python-pip
-	- sudo apt-get install python-psycopg2
-	- sudo pip install django-bootstrap3
-	- sudo pip install django-zurb-foundation
+  - pip3 install Django==$DJANGO_VERSION
+  - psql -c 'create database kanjam;' -U postgres
+  - psql -c "create user kanjam WITH PASSWORD 'root'" -U postgres
+  - psql -c 'alter user kanjam CREATEDB;' -U postgres
+  - sudo apt-get install python3-psycopg2
+  - pip3 install django-bootstrap3==6.2.2
+  - pip3 install django-foundation
+  - pip3 install django-zurb-foundation
+  - sudo apt-get build-dep python-psycopg2
+  - pip3 install psycopg2 
+  - pip3 install --upgrade setuptools
 
-before_script:
-	- python manage.py makemigrations
-	- python manage.py migrate
+script:
+  - python3 manage.py test

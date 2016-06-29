@@ -14,6 +14,7 @@ install:
   - pip3 install Django==$DJANGO_VERSION
   - psql -c 'create database kanjam;' -U postgres
   - psql -c "create user kanjam WITH PASSWORD 'root'" -U postgres
+  - psql -c "GRANT ALL PRIVILEGES ON database kanjam TO kanjam" -U postgres
   - sudo apt-get install python3-psycopg2
   - pip3 install django-bootstrap3==6.2.2
   - pip3 install django-foundation
